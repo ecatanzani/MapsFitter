@@ -1,0 +1,318 @@
+********************* Automatic Log File Generator *******************
+
+////////////////////////// Simulation Parameters //////////////////////////
+
+Simulation timestamp: 1531913062
+Simulation TRandom3 seed: 22
+All Sky Data LS events: 1000
+All Sky Data HS events: 1000000000
+*
+*
+*
+
+
+
+ //////////////////////////////////////// Low Statistics fits //////////////////////////////////////// 
+
+
+
+ -------------- > Isotropic Monopole 
+
+Parameter N_0 value 5.45249 error 0.205486
+Parameter N_1 value -0.0714735 error 0.215289
+Parameter N_2 value -0.00574073 error 0.197584
+Parameter N_3 value 0.10068 error 0.203009
+
+
+Anisotropy level: 0.0226692 +/- 0.0380078
+
+
+chisq: 197.179ndof: 459chisq/ndof: 0.429584
+
+ -------------- > Anisotropic Monopole (NS) 
+
+Parameter N_0 value 1206.17 error 1325.83
+Parameter N_1 value -1186.7 error 1934.17
+Parameter N_2 value -995.615 error 2329.13
+Parameter N_3 value 1204.04 error 2412.49
+
+
+Anisotropy level: 1.6266 +/- 2.56993
+
+
+chisq: 5.04893e-12ndof: -3chisq/ndof: -1.68298e-12
+
+ -------------- > Anisotropic Monopole (EW) 
+
+Parameter N_0 value 1206.17 error 1325.83
+Parameter N_1 value -1186.7 error 1934.17
+Parameter N_2 value -995.615 error 2329.13
+Parameter N_3 value 1204.04 error 2412.49
+
+
+Anisotropy level: 1.6266 +/- 2.56993
+
+
+chisq: 5.04893e-12ndof: -3chisq/ndof: -1.68298e-12
+
+ -------------- > Anisotropic Monopole (FB) 
+
+Parameter N_0 value 1206.17 error 1325.83
+Parameter N_1 value -1186.7 error 1934.17
+Parameter N_2 value -995.615 error 2329.13
+Parameter N_3 value 1204.04 error 2412.49
+
+
+Anisotropy level: 1.6266 +/- 2.56993
+
+
+chisq: 5.04893e-12ndof: -3chisq/ndof: -1.68298e-12
+
+ -------------- > NS + EW linear combination 
+
+Parameter N_0 value 1206.17 error 1325.83
+Parameter N_1 value -1186.7 error 1934.17
+Parameter N_2 value -995.615 error 2329.13
+Parameter N_3 value 1204.04 error 2412.49
+
+
+Anisotropy level: 1.6266 +/- 2.56993
+
+
+chisq: 5.04893e-12ndof: -3chisq/ndof: -1.68298e-12
+
+ -------------- > NS + FB linear combination 
+
+Parameter N_0 value 1206.17 error 1325.83
+Parameter N_1 value -1186.7 error 1934.17
+Parameter N_2 value -995.615 error 2329.13
+Parameter N_3 value 1204.04 error 2412.49
+
+
+Anisotropy level: 1.6266 +/- 2.56993
+
+
+chisq: 5.04893e-12ndof: -3chisq/ndof: -1.68298e-12
+
+ -------------- > EW + FB linear combination 
+
+Parameter N_0 value 1206.17 error 1325.83
+Parameter N_1 value -1186.7 error 1934.17
+Parameter N_2 value -995.615 error 2329.13
+Parameter N_3 value 1204.04 error 2412.49
+
+
+Anisotropy level: 1.6266 +/- 2.56993
+
+
+chisq: 5.04893e-12ndof: -3chisq/ndof: -1.68298e-12
+
+ -------------- > FullMixed linear combination 
+
+Parameter N_0 value 1206.17 error 1325.83
+Parameter N_1 value -1186.7 error 1934.17
+Parameter N_2 value -995.615 error 2329.13
+Parameter N_3 value 1204.04 error 2412.49
+
+
+Anisotropy level: 1.6266 +/- 2.56993
+
+
+chisq: 5.04893e-12ndof: -3chisq/ndof: -1.68298e-12
+
+ //////////////////////////////////////// High Statistics fits //////////////////////////////////////// 
+
+
+
+ -------------- > Isotropic Monopole 
+
+Parameter N_0 value 5.47057e+06 error 181.657
+Parameter N_1 value -332.532 error 190.012
+Parameter N_2 value 5.57299 error 174.28
+Parameter N_3 value -72.3951 error 179.396
+
+
+Anisotropy level: 6.22178e-05 +/- 3.46474e-05
+
+
+chisq: 582.771ndof: 591chisq/ndof: 0.986075
+
+ -------------- > Anisotropic Monopole (NS) 
+
+Parameter N_0 value 5.47059e+06 error 180.669
+Parameter N_1 value 607682 error 190.342
+Parameter N_2 value -405.885 error 173.732
+Parameter N_3 value 28.0798 error 178.829
+
+
+Anisotropy level: 0.111082 +/- 3.49865e-05
+
+
+chisq: 599.211ndof: 591chisq/ndof: 1.01389
+
+ -------------- > Anisotropic Monopole (EW) 
+
+Parameter N_0 value 5.47048e+06 error 181.61
+Parameter N_1 value -148.295 error 189.225
+Parameter N_2 value 607740 error 173.412
+Parameter N_3 value 76.8001 error 178.753
+
+
+Anisotropy level: 0.111095 +/- 3.19134e-05
+
+
+chisq: 604.995ndof: 591chisq/ndof: 1.02368
+
+ -------------- > Anisotropic Monopole (FB) 
+
+Parameter N_0 value 5.4705e+06 error 181.244
+Parameter N_1 value -186.059 error 189.574
+Parameter N_2 value -259.531 error 173.628
+Parameter N_3 value 608133 error 178.635
+
+
+Anisotropy level: 0.111166 +/- 3.28613e-05
+
+
+chisq: 671.942ndof: 591chisq/ndof: 1.13696
+
+ -------------- > NS + EW linear combination 
+
+Parameter N_0 value 5.47051e+06 error 180.489
+Parameter N_1 value 684050 error 189.186
+Parameter N_2 value 683797 error 172.473
+Parameter N_3 value 79.9579 error 177.816
+
+
+Anisotropy level: 0.176805 +/- 3.36013e-05
+
+
+chisq: 593.779ndof: 591chisq/ndof: 1.0047
+
+ -------------- > NS + FB linear combination 
+
+Parameter N_0 value 5.47058e+06 error 180.072
+Parameter N_1 value 683680 error 189.592
+Parameter N_2 value 52.4576 error 172.722
+Parameter N_3 value 683907 error 177.688
+
+
+Anisotropy level: 0.176769 +/- 3.40862e-05
+
+
+chisq: 587.492ndof: 591chisq/ndof: 0.994065
+
+ -------------- > EW + FB linear combination 
+
+Parameter N_0 value 5.47052e+06 error 181.14
+Parameter N_1 value -79.8964 error 188.388
+Parameter N_2 value 683692 error 172.32
+Parameter N_3 value 683505 error 177.58
+
+
+Anisotropy level: 0.176721 +/- 3.25149e-05
+
+
+chisq: 521.6ndof: 591chisq/ndof: 0.882573
+
+ -------------- > FullMixed linear combination 
+
+Parameter N_0 value 5.47062e+06 error 179.777
+Parameter N_1 value 781448 error 187.682
+Parameter N_2 value 781335 error 170.717
+Parameter N_3 value 781315 error 175.922
+
+
+Anisotropy level: 0.247388 +/- 3.35819e-05
+
+
+chisq: 603.675ndof: 591chisq/ndof: 1.02145
+
+ //////////////////////////////////////// Low Statistics Cleaned fits //////////////////////////////////////// 
+
+
+
+ -------------- > Anisotropic Monopole (NS) 
+
+Parameter N_0 value nan error nan
+Parameter N_1 value nan error nan
+Parameter N_2 value nan error nan
+Parameter N_3 value nan error nan
+
+
+Anisotropy level: nan +/- nan
+
+
+chisq: nanndof: -3chisq/ndof: nan
+
+ -------------- > Anisotropic Monopole (EW) 
+
+Parameter N_0 value nan error nan
+Parameter N_1 value nan error nan
+Parameter N_2 value nan error nan
+Parameter N_3 value nan error nan
+
+
+Anisotropy level: nan +/- nan
+
+
+chisq: nanndof: -3chisq/ndof: nan
+
+ -------------- > Anisotropic Monopole (FB) 
+
+Parameter N_0 value nan error nan
+Parameter N_1 value nan error nan
+Parameter N_2 value nan error nan
+Parameter N_3 value nan error nan
+
+
+Anisotropy level: nan +/- nan
+
+
+chisq: nanndof: -3chisq/ndof: nan
+
+ //////////////////////////////////////// High Cleaned Statistics fits //////////////////////////////////////// 
+
+
+
+ -------------- > Anisotropic Monopole (NS) 
+
+Parameter N_0 value 5.47059e+06 error 180.669
+Parameter N_1 value 607682 error 190.342
+Parameter N_2 value -405.885 error 173.732
+Parameter N_3 value 28.0798 error 178.829
+
+
+Anisotropy level: 0.111082 +/- 3.49865e-05
+
+
+chisq: 599.211ndof: 591chisq/ndof: 1.01389
+
+ -------------- > Anisotropic Monopole (EW) 
+
+Parameter N_0 value 5.47048e+06 error 181.61
+Parameter N_1 value -148.295 error 189.225
+Parameter N_2 value 607740 error 173.412
+Parameter N_3 value 76.8001 error 178.753
+
+
+Anisotropy level: 0.111095 +/- 3.19134e-05
+
+
+chisq: 604.995ndof: 591chisq/ndof: 1.02368
+
+ -------------- > Anisotropic Monopole (FB) 
+
+Parameter N_0 value 5.4705e+06 error 181.244
+Parameter N_1 value -186.059 error 189.574
+Parameter N_2 value -259.531 error 173.628
+Parameter N_3 value 608133 error 178.635
+
+
+Anisotropy level: 0.111166 +/- 3.28613e-05
+
+
+chisq: 671.942ndof: 591chisq/ndof: 1.13696
+
+Simulation Completed !
+
