@@ -181,12 +181,13 @@ void visualizer(std::string input_path)
 {
     
     UInt_t tree_entries = 0;
-    Int_t ani_type = 0;
+    Int_t ani_type = 1;
+    Double_t ani_intensity = 0.01;
     
-    TH1D iso_component("ISO","iso component",1000,-2,8);
-    TH1D NS_component("NS","NS component",1000,-2,8);
-    TH1D EW_component("EW","EW component",1000,-2,8);
-    TH1D FB_component("FB","FB component",1000,-2,8);
+    TH1D iso_component("ISO","iso component",100,530,560);
+    TH1D NS_component("NS","NS component",100,-0.02,0.09);
+    TH1D EW_component("EW","EW component",100,-0.02,0.09);
+    TH1D FB_component("FB","FB component",100,-0.02,0.09);
     
     ///////////////////////////////////////////////////
     
@@ -207,11 +208,14 @@ void visualizer(std::string input_path)
     for(UInt_t tidx=0; tidx<tree_entries; ++tidx)
     {
         myTree->GetEntry(tidx);
-        iso_component.Fill(tmp_result.fit_par_HS[ani_type][0]);
-        NS_component.Fill(tmp_result.fit_par_HS[ani_type][1]);
-        EW_component.Fill(tmp_result.fit_par_HS[ani_type][2]);
-        FB_component.Fill(tmp_result.fit_par_HS[ani_type][3]);
         
+        if(tmp_result.inputAni[0]==ani_intensity)
+        {
+            iso_component.Fill(tmp_result.fit_par_HS[ani_type][0]);
+            NS_component.Fill(tmp_result.fit_par_HS[ani_type][1]);
+            EW_component.Fill(tmp_result.fit_par_HS[ani_type][2]);
+            FB_component.Fill(tmp_result.fit_par_HS[ani_type][3]);
+        }
     }
     
     iso_component.SetLineColor(kBlue);

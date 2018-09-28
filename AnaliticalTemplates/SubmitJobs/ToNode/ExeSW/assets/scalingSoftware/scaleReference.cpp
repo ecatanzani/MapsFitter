@@ -15,8 +15,8 @@ int main(int argc,char* argv[])
     
     ///////////////// Maps statistics variables:
     
-    const static unsigned long int data_all_sky_LS_events = 27712;
-    const static unsigned long int data_all_sky_HS_events = 46187;
+    const static unsigned long int data_all_sky_LS_events = 828;
+    const static unsigned long int data_all_sky_HS_events = 1656;
     
     ///////////////// Dependency paths:
     
@@ -72,7 +72,7 @@ void read_DAMPE_FullIso(TH2D &DAMPE_FullIso,std::string input_path) {
     else
     {
         TH2D* tmp_reference = (TH2D*)inputFile.Get("Iso_SkyMap_1000");
-        tmp_reference->Rebin2D(20,20);
+        tmp_reference->Rebin2D(40,60);
         
         new (&DAMPE_FullIso) (TH2D)(*(TH2D*)tmp_reference->Clone("DAMPE_ReferenceMap"));
     }

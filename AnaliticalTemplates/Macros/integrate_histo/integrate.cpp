@@ -109,12 +109,12 @@ int main(int argc,char* argv[])
     TF1 cl68_fitfunc("cl68_fitfunc",c_fitfunc,0,max_fit_vale,3);
     cl68_fitfunc.SetParameter(0,par_0_68);
     cl68_fitfunc.SetParameter(1,par_1_68);
-    cl68_fitfunc.SetParameter(2,par_1_68);
+    cl68_fitfunc.SetParameter(2,par_2_68);
     
     TF1 cl95_fitfunc("cl95_fitfunc",c_fitfunc,0,max_fit_vale,3);
     cl95_fitfunc.SetParameter(0,par_0_95);
     cl95_fitfunc.SetParameter(1,par_1_95);
-    cl95_fitfunc.SetParameter(2,par_1_95);
+    cl95_fitfunc.SetParameter(2,par_2_95);
     
     ///////////////////// Writing final result
     
@@ -195,10 +195,10 @@ void get_delta_histos(std::string paths[],std::vector<TH1D> &hdelta)
 {
     UInt_t tree_entries = 0;
     
-    TH1D delta_16("delta_16","delta distribution (16000)",100,0,0.012);
-    TH1D delta_32("delta_32","delta distribution (32000)",100,0,0.008);
-    TH1D delta_64("delta_64","delta distribution (64000)",100,0,0.006);
-    TH1D delta_110("delta_110","delta distribution (110000)",100,0,0.005);
+    TH1D delta_16("delta_16","delta distribution (16000)",100,0,0.1);
+    TH1D delta_32("delta_32","delta distribution (32000)",100,0,0.06);
+    TH1D delta_64("delta_64","delta distribution (64000)",100,0,0.04);
+    TH1D delta_110("delta_110","delta distribution (110000)",100,0,0.035);
     
     for(Int_t idx=0; idx<2; ++idx)
     {

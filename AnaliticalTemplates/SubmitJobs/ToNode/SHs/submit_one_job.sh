@@ -5,13 +5,15 @@ USER="$(whoami)"
 #ENV="${HOME}/.bash_profile"
 #if [[ ! -f $ENV ]]; then echo "$ENV does not exist" >&2; exit 1; fi
 
+DATA_DIR="/storage/gpfs_data/dampe/users/ecatanzani/Data/DAMPE/MapsFitter/CNAFJobs/tmpJobs"
+
 SUBSET_DIR="DAMPE_Sky"
 
 ENV_FILE=".bash_profile"
 ENV_PATH="${HOME}/${ENV_FILE}"
 if [[ ! -f ${ENV_PATH} ]]; then echo "$ENV_PATH does not exist" >&2; exit 1; fi
 
-WORKDIR="/storage/gpfs_data/dampe/users/ecatanzani/MyRepos/DAMPE/MapsFitting/AnaliticalTemplates/SubmitJobs/ToNode"
+WORKDIR="/storage/gpfs_data/dampe/users/ecatanzani/MyRepos/DAMPE/MapsFitter/AnaliticalTemplates/SubmitJobs/ToNode"
 if [[ ! -d $WORKDIR ]]; then echo "$WORKDIR does not exist" >&2; exit 1; fi
 
 EXEC="${WORKDIR}/ExeSW/Release/JMapsFit"
@@ -23,7 +25,7 @@ if [[ ! -d $SUBMITDIR ]]; then echo "$SUBMITDIR does not exist" >&2; exit 1; fi
 TEMPLATE="${SUBMITDIR}/submit.job.template"
 if [[ ! -f $TEMPLATE  ]]; then echo "$TEMPLATE does not exist" >&2; exit; fi
 
-OUTDIR="${WORKDIR}/JobResults/${SUBSET_DIR}"
+OUTDIR="${DATA_DIR}/JobResults/${SUBSET_DIR}"
 if [[ ! -d $OUTDIR ]]; then mkdir -pv ${OUTDIR}
 else echo "output dir will be $OUTDIR"; fi
 
@@ -33,10 +35,10 @@ PAR=$@
 
 NAME="MapsFit"
 
-JOB_DIR=${SUBMITDIR}/${SUBSET_DIR}/jobs
+JOB_DIR=${DATA_DIR}/${SUBSET_DIR}/jobs
 if [[ ! -d $JOB_DIR ]]; then mkdir -pv ${JOB_DIR}; fi
 
-LOG_DIR=${SUBMITDIR}/${SUBSET_DIR}/log
+LOG_DIR=${DATA_DIR}/${SUBSET_DIR}/log
 if [[ ! -d $LOG_DIR ]]; then mkdir -pv ${LOG_DIR}; fi
 
 echo "Copying ENVIRONMENT variable to storage dierctory: "

@@ -1,21 +1,21 @@
 #!/bin/sh
 
-BATCH_TRY=1000                    #Number of try for each job
-N_TRY=10                        #Number of total try
+BATCH_TRY=100                    #Number of try for each job
+N_TRY=100                        #Number of total try
 
 STATUS=1
 
 ######################### Dependency paths ##########################
 
-SEEDS_PATH="/storage/gpfs_data/dampe/users/ecatanzani/MyRepos/DAMPE/MapsFitting/AnaliticalTemplates/SubmitJobs/ToNode/ExeSW/assets/produceSeeds/seeds.txt"
+SEEDS_PATH="/storage/gpfs_data/dampe/users/ecatanzani/MyRepos/DAMPE/MapsFitter/AnaliticalTemplates/SubmitJobs/ToNode/ExeSW/assets/produceSeeds/seeds.txt"
 
-SCALED_PATH="/storage/gpfs_data/dampe/users/ecatanzani/MyRepos/DAMPE/MapsFitting/AnaliticalTemplates/SubmitJobs/ToNode/ExeSW/assets/scalingSoftware/scaled_reference_Isotropic_histos.root"
+SCALED_PATH="/storage/gpfs_data/dampe/users/ecatanzani/MyRepos/DAMPE/MapsFitter/AnaliticalTemplates/SubmitJobs/ToNode/ExeSW/assets/scalingSoftware/scaled_reference_Isotropic_histos.root"
 DAMPE_ISO_MAP="/storage/gpfs_data/dampe/users/ecatanzani/MyRepos/DAMPE/Salomon/results/FullHistos.root"
 
 ########### Final template paths
 
-TEMPLATES_ALLSKY="/storage/gpfs_data/dampe/users/ecatanzani/MyRepos/DAMPE/MapsFitting/AnaliticalTemplates/SubmitJobs/ToNode/ExeSW/assets/computeTemplates/results/AllSkyTemplates.root"
-TEMPLATES_DAMPE="/storage/gpfs_data/dampe/users/ecatanzani/MyRepos/DAMPE/MapsFitting/AnaliticalTemplates/SubmitJobs/ToNode/ExeSW/assets/computeTemplates/results/DAMPETemplates.root"
+TEMPLATES_ALLSKY="/storage/gpfs_data/dampe/users/ecatanzani/MyRepos/DAMPE/MapsFitter/AnaliticalTemplates/SubmitJobs/ToNode/ExeSW/assets/computeTemplates/results/AllSkyTemplates.root"
+TEMPLATES_DAMPE="/storage/gpfs_data/dampe/users/ecatanzani/MyRepos/DAMPE/MapsFitter/AnaliticalTemplates/SubmitJobs/ToNode/ExeSW/assets/computeTemplates/results/DAMPETemplates.root"
 
 ############################ Functions ##############################
 
@@ -29,7 +29,7 @@ function compute_free()
 function scale_reference()
 {
     REFERENCE_PATH="/storage/gpfs_data/dampe/users/ecatanzani/MyRepos/DAMPE/Salomon/results/FullHistos.root"
-    SCALE_EXE="/storage/gpfs_data/dampe/users/ecatanzani/MyRepos/DAMPE/MapsFitting/AnaliticalTemplates/SubmitJobs/ToNode/ExeSW/assets/scalingSoftware/SReference"
+    SCALE_EXE="/storage/gpfs_data/dampe/users/ecatanzani/MyRepos/DAMPE/MapsFitter/AnaliticalTemplates/SubmitJobs/ToNode/ExeSW/assets/scalingSoftware/SReference"
 
     CMD="$SCALE_EXE $REFERENCE_PATH $SCALED_PATH"
     echo ${CMD}
@@ -39,7 +39,7 @@ function scale_reference()
 
 function get_seeds()
 {
-    SEEDS_EXE="/storage/gpfs_data/dampe/users/ecatanzani/MyRepos/DAMPE/MapsFitting/AnaliticalTemplates/SubmitJobs/ToNode/ExeSW/assets/produceSeeds/PSeeds"
+    SEEDS_EXE="/storage/gpfs_data/dampe/users/ecatanzani/MyRepos/DAMPE/MapsFitter/AnaliticalTemplates/SubmitJobs/ToNode/ExeSW/assets/produceSeeds/PSeeds"
 
     CMD="$SEEDS_EXE $SEEDS_PATH $N_TRY $BATCH_TRY"
     echo ${CMD}
@@ -49,7 +49,7 @@ function get_seeds()
 
 function compute_templates()
 {
-    TEMPLATES_EXE="/storage/gpfs_data/dampe/users/ecatanzani/MyRepos/DAMPE/MapsFitting/AnaliticalTemplates/SubmitJobs/ToNode/ExeSW/assets/computeTemplates/Release/JTemplates"
+    TEMPLATES_EXE="/storage/gpfs_data/dampe/users/ecatanzani/MyRepos/DAMPE/MapsFitter/AnaliticalTemplates/SubmitJobs/ToNode/ExeSW/assets/computeTemplates/Release/JTemplates"
 
     CMD="$TEMPLATES_EXE $DAMPE_ISO_MAP $SCALED_PATH";
     echo ${CMD}

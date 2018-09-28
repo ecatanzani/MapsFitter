@@ -68,63 +68,63 @@ void draw_maps(const std::string resultPath,bool HS=false,bool templates=false) 
         if(HS)
         {
         
-            Data_Iso_LS = (TH2D*)inputFile.Get("Data_Iso_HS");
+            Data_Iso_LS = (TH2D*)inputFile.Get("DAMPE_Data_Iso_HS");
             Data_Iso_LS->SetDirectory(0);
     
-            Data_AniNS_LS = (TH2D*)inputFile.Get("Data_AniNS_HS");
+            Data_AniNS_LS = (TH2D*)inputFile.Get("DAMPE_Data_AniNS_HS");
             Data_AniNS_LS->SetDirectory(0);
     
-            Data_AniEW_LS = (TH2D*)inputFile.Get("Data_AniEW_HS");
+            Data_AniEW_LS = (TH2D*)inputFile.Get("DAMPE_Data_AniEW_HS");
             Data_AniEW_LS->SetDirectory(0);
     
-            Data_AniFB_LS = (TH2D*)inputFile.Get("Data_AniFB_HS");
+            Data_AniFB_LS = (TH2D*)inputFile.Get("DAMPE_Data_AniFB_HS");
             Data_AniFB_LS->SetDirectory(0);
     
-            MixedData_NS_EW_LS = (TH2D*)inputFile.Get("MixedData_NS_EW_HS");
+            MixedData_NS_EW_LS = (TH2D*)inputFile.Get("DAMPE_MixedData_NS_EW_HS");
             MixedData_NS_EW_LS->SetDirectory(0);
     
-            MixedData_NS_FB_LS = (TH2D*)inputFile.Get("MixedData_NS_FB_HS");
+            MixedData_NS_FB_LS = (TH2D*)inputFile.Get("DAMPE_MixedData_NS_FB_HS");
             MixedData_NS_FB_LS->SetDirectory(0);
     
-            MixedData_EW_FB_LS = (TH2D*)inputFile.Get("MixedData_EW_FB_HS");
+            MixedData_EW_FB_LS = (TH2D*)inputFile.Get("DAMPE_MixedData_EW_FB_HS");
             MixedData_EW_FB_LS->SetDirectory(0);
     
-            FullMixedData_LS = (TH2D*)inputFile.Get("FullMixedData_HS");
+            FullMixedData_LS = (TH2D*)inputFile.Get("DAMPE_FullMixedData_HS");
             FullMixedData_LS->SetDirectory(0);
     
         }
         else
         {
             
-            //Data_Iso_LS = (TH2D*)inputFile.Get("DAMPE_Data_Iso_LS");
-            //Data_Iso_LS->SetDirectory(0);
+            Data_Iso_LS = (TH2D*)inputFile.Get("DAMPE_Data_Iso_LS");
+            Data_Iso_LS->SetDirectory(0);
         
-            Data_AniNS_LS = (TH2D*)inputFile.Get("relative_DAMPE_Data_AniNS_LS");
+            Data_AniNS_LS = (TH2D*)inputFile.Get("DAMPE_Data_AniNS_LS");
             Data_AniNS_LS->SetDirectory(0);
         
-            Data_AniEW_LS = (TH2D*)inputFile.Get("relative_DAMPE_Data_AniEW_LS");
+            Data_AniEW_LS = (TH2D*)inputFile.Get("DAMPE_Data_AniEW_LS");
             Data_AniEW_LS->SetDirectory(0);
         
-            Data_AniFB_LS = (TH2D*)inputFile.Get("relative_DAMPE_Data_AniFB_LS");
+            Data_AniFB_LS = (TH2D*)inputFile.Get("DAMPE_Data_AniFB_LS");
             Data_AniFB_LS->SetDirectory(0);
         
-            MixedData_NS_EW_LS = (TH2D*)inputFile.Get("relative_DAMPE_MixedData_NS_EW_LS");
+            MixedData_NS_EW_LS = (TH2D*)inputFile.Get("DAMPE_MixedData_NS_EW_LS");
             MixedData_NS_EW_LS->SetDirectory(0);
         
-            MixedData_NS_FB_LS = (TH2D*)inputFile.Get("relative_DAMPE_MixedData_NS_FB_LS");
+            MixedData_NS_FB_LS = (TH2D*)inputFile.Get("DAMPE_MixedData_NS_FB_LS");
             MixedData_NS_FB_LS->SetDirectory(0);
         
-            MixedData_EW_FB_LS = (TH2D*)inputFile.Get("relative_DAMPE_MixedData_EW_FB_LS");
+            MixedData_EW_FB_LS = (TH2D*)inputFile.Get("DAMPE_MixedData_EW_FB_LS");
             MixedData_EW_FB_LS->SetDirectory(0);
         
-            FullMixedData_LS = (TH2D*)inputFile.Get("relative_DAMPE_FullMixedData_LS");
+            FullMixedData_LS = (TH2D*)inputFile.Get("DAMPE_FullMixedData_LS");
             FullMixedData_LS->SetDirectory(0);
         
         }
     
         inputFile.Close();
     
-        //draw_single_map(Data_Iso_LS,logz);
+        draw_single_map(Data_Iso_LS,logz);
         draw_single_map(Data_AniNS_LS,logz);
         draw_single_map(Data_AniEW_LS,logz);
         draw_single_map(Data_AniFB_LS,logz);

@@ -64,8 +64,8 @@
 
 ///////////////////////////////////////////////////////////////////////////////
 
-const static unsigned long int data_all_sky_LS_events = 27712;
-const static unsigned long int data_all_sky_HS_events = 46187;
+const static unsigned long int data_all_sky_LS_events = 828;
+const static unsigned long int data_all_sky_HS_events = 1656;
 
 const static time_t time_stamp=time(0);                                   //Setting timestamp for the out files
 
@@ -81,8 +81,9 @@ const static bool DAMPE_simulation = true;
 const static bool DAMPE_relative_simulation = false;
 const static bool fitDistribution_test = false;
 
-const static Int_t Nbin = 9*18;
-// const static Nbin = 18*36;
+const static Int_t Nbin = 3*9;
+//const static Int_t Nbin = 9*18;
+//const static Int_t Nbin = 18*36;
 
 /////////////////////////////// Dependency Paths //////////////////////////////
 
@@ -93,10 +94,10 @@ const static Int_t Nbin = 9*18;
 //////////////////////////// Outh paths for logs and ROOT files:
 
 const static std::string DAMPE_Iso_Map = "/storage/gpfs_data/dampe/users/ecatanzani/MyRepos/DAMPE/Salomon/results/FullHistos.root";
-const static std::string DAMPE_Iso_scaled_Maps = "/storage/gpfs_data/dampe/users/ecatanzani/MyRepos/DAMPE/MapsFitting/AnaliticalTemplates/SubmitJobs/ToNode/ExeSW/assets/scalingSoftware/scaled_reference_Isotropic_histos.root";
-const static std::string templates_path = "/storage/gpfs_data/dampe/users/ecatanzani/MyRepos/DAMPE/MapsFitting/AnaliticalTemplates/SubmitJobs/ToNode/ExeSW/assets/computeTemplates/results/AllSkyTemplates.root";
-const static std::string DAMPE_templates_path = "/storage/gpfs_data/dampe/users/ecatanzani/MyRepos/DAMPE/MapsFitting/AnaliticalTemplates/SubmitJobs/ToNode/ExeSW/assets/computeTemplates/results/DAMPETemplates.root";
-const static std::string seeds_path = "/storage/gpfs_data/dampe/users/ecatanzani/MyRepos/DAMPE/MapsFitting/AnaliticalTemplates/SubmitJobs/ToNode/ExeSW/assets/produceSeeds/seeds.txt";
+const static std::string DAMPE_Iso_scaled_Maps = "/storage/gpfs_data/dampe/users/ecatanzani/MyRepos/DAMPE/MapsFitter/AnaliticalTemplates/SubmitJobs/ToNode/ExeSW/assets/scalingSoftware/scaled_reference_Isotropic_histos.root";
+const static std::string templates_path = "/storage/gpfs_data/dampe/users/ecatanzani/MyRepos/DAMPE/MapsFitter/AnaliticalTemplates/SubmitJobs/ToNode/ExeSW/assets/computeTemplates/results/AllSkyTemplates.root";
+const static std::string DAMPE_templates_path = "/storage/gpfs_data/dampe/users/ecatanzani/MyRepos/DAMPE/MapsFitter/AnaliticalTemplates/SubmitJobs/ToNode/ExeSW/assets/computeTemplates/results/DAMPETemplates.root";
+const static std::string seeds_path = "/storage/gpfs_data/dampe/users/ecatanzani/MyRepos/DAMPE/MapsFitter/AnaliticalTemplates/SubmitJobs/ToNode/ExeSW/assets/produceSeeds/seeds.txt";
 
 
 //////////////////////////////// SBI Parameters ///////////////////////////////
