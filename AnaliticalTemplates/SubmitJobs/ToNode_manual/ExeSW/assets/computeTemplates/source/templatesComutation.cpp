@@ -41,21 +41,25 @@ void templates_computation(
     
     //////////// Costheta flat binning variables
     
-    Int_t n_bin_lon_LS = 18;
+    //Int_t n_bin_lon_LS = 18;
+    Int_t n_bin_lon_LS = 9;
     Double_t lon_bin_min_LS = -180;
     Double_t lon_bin_max_LS = 180;
     
-    Int_t n_bin_lat_LS = 9;
+    //Int_t n_bin_lat_LS = 9;
+    Int_t n_bin_lat_LS = 3;
     Double_t lat_bin_min_LS = -90;
     Double_t lat_bin_max_LS = 90;
     
     Double_t* binning_LS = nullptr;
     
-    Int_t n_bin_lon_HS = 18;
+    //Int_t n_bin_lon_HS = 18;
+    Int_t n_bin_lon_HS = 9;
     Double_t lon_bin_min_HS = -180;
     Double_t lon_bin_max_HS = 180;
     
-    Int_t n_bin_lat_HS = 9;
+    //Int_t n_bin_lat_HS = 9;
+    Int_t n_bin_lat_HS = 3;
     Double_t lat_bin_min_HS = -90;
     Double_t lat_bin_max_HS = 90;
     

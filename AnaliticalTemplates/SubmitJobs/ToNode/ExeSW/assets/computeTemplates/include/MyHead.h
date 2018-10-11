@@ -14,10 +14,6 @@
 
 const static time_t time_stamp=time(0);
 
-const static std::string path_location = "/storage/gpfs_data/dampe/users/ecatanzani/MyRepos/DAMPE/MapsFitter/AnaliticalTemplates/SubmitJobs/ToNode/ExeSW/assets/computeTemplates/logs/";
-const static std::string templates_path = "/storage/gpfs_data/dampe/users/ecatanzani/MyRepos/DAMPE/MapsFitter/AnaliticalTemplates/SubmitJobs/ToNode/ExeSW/assets/computeTemplates/results/AllSkyTemplates.root";
-const static std::string DAMPE_templates_path = "/storage/gpfs_data/dampe/users/ecatanzani/MyRepos/DAMPE/MapsFitter/AnaliticalTemplates/SubmitJobs/ToNode/ExeSW/assets/computeTemplates/results/DAMPETemplates.root";
-
 //////////////////////// Custom functions
 
 extern void read_DAMPE_FullIso(TH2D &DAMPE_FullIso);
@@ -27,6 +23,8 @@ extern void get_scaled_isotropic_DAMPE_maps(TH2D &DAMPE_ReferenceMap_LS,TH2D &DA
 
 extern void templates_computation(
                                     std::ofstream &output_log_file,
+                                    std::string templates_path,
+                                    std::string DAMPE_templates_path,
                                     TH2D &DAMPE_ReferenceMap_LS,
                                     TH2D &DAMPE_ReferenceMap_HS
                                   );

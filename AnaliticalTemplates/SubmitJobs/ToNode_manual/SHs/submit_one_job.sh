@@ -5,22 +5,9 @@ USER="$(whoami)"
 #ENV="${HOME}/.bash_profile"
 #if [[ ! -f $ENV ]]; then echo "$ENV does not exist" >&2; exit 1; fi
 
+DATA_DIR="/storage/gpfs_data/dampe/users/ecatanzani/Data/DAMPE/MapsFitter/CNAFJobs/tmpJobs"
+
 SUBSET_DIR="DAMPE_Sky"
-
-############ SandBox for JobResults into local data dir ############
-
-UNIQUE="$$_$RANDOM"
-SANDBOX=/storage/gpfs_data/dampe/users/ecatanzani/Data/DAMPE/MapsFitter/CNAFJobs/tmpJobs/$UNIQUE
-    while [[ -d $SANDBOX ]]; do
-        UNIQUE="$$_$RANDOM"
-        SANDBOX=/storage/gpfs_data/dampe/users/ecatanzani/Data/DAMPE/MapsFitter/CNAFJobs/tmpJobs/$UNIQUE
-        echo "Searching for a free SandBox dir !"
-    done
-mkdir -vp $SANDBOX
-cd $SANDBOX
-pwd
-
-######################
 
 ENV_FILE=".bash_profile"
 ENV_PATH="${HOME}/${ENV_FILE}"
@@ -38,7 +25,7 @@ if [[ ! -d $SUBMITDIR ]]; then echo "$SUBMITDIR does not exist" >&2; exit 1; fi
 TEMPLATE="${SUBMITDIR}/submit.job.template"
 if [[ ! -f $TEMPLATE  ]]; then echo "$TEMPLATE does not exist" >&2; exit; fi
 
-OUTDIR="${SANDBOX}/results/${SUBSET_DIR}"
+OUTDIR="${DATA_DIR}/JobResults/${SUBSET_DIR}"
 if [[ ! -d $OUTDIR ]]; then mkdir -pv ${OUTDIR}
 else echo "output dir will be $OUTDIR"; fi
 
@@ -48,10 +35,10 @@ PAR=$@
 
 NAME="MapsFit"
 
-JOB_DIR="${SANDBOX}/out/jobs"
+JOB_DIR=${DATA_DIR}/${SUBSET_DIR}/jobs
 if [[ ! -d $JOB_DIR ]]; then mkdir -pv ${JOB_DIR}; fi
 
-LOG_DIR="${SANDBOX}/out/log"
+LOG_DIR=${DATA_DIR}/${SUBSET_DIR}/log
 if [[ ! -d $LOG_DIR ]]; then mkdir -pv ${LOG_DIR}; fi
 
 echo "Copying ENVIRONMENT variable to storage dierctory: "

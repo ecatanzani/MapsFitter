@@ -64,8 +64,8 @@
 
 ///////////////////////////////////////////////////////////////////////////////
 
-const static unsigned long int data_all_sky_LS_events = 828;
-const static unsigned long int data_all_sky_HS_events = 1656;
+const static unsigned long int data_all_sky_LS_events = 6928;
+const static unsigned long int data_all_sky_HS_events = 13856;
 
 const static time_t time_stamp=time(0);                                   //Setting timestamp for the out files
 
@@ -81,9 +81,8 @@ const static bool DAMPE_simulation = true;
 const static bool DAMPE_relative_simulation = false;
 const static bool fitDistribution_test = false;
 
-const static Int_t Nbin = 3*9;
-//const static Int_t Nbin = 9*18;
-//const static Int_t Nbin = 18*36;
+const static Int_t Nbin = 9*18;
+// const static Nbin = 18*36;
 
 /////////////////////////////// Dependency Paths //////////////////////////////
 

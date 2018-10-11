@@ -1,7 +1,7 @@
 CC=gcc
 CXX=g++
 RM=rm -f
-CPPFLAGS=-g
+CPPFLAGS=-g -std=c++14
 
 #################### DEPENDENCIES ####################
 

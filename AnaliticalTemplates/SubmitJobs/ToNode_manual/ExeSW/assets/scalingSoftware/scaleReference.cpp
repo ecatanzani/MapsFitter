@@ -7,7 +7,7 @@
 #include "TH2D.h"
 #include "TMath.h"
 
-void read_DAMPE_FullIso(TH2D &DAMPE_FullIso,std::string input_path,int binning_sfactor);
+void read_DAMPE_FullIso(TH2D &DAMPE_FullIso,std::string input_path);
 void scale_reference_map(TH2D &DAMPE_ReferenceMap,TH2D &DAMPE_ReferenceMap_scaled,const unsigned long int n_events,bool low_stat);
 
 int main(int argc,char* argv[])
@@ -15,30 +15,13 @@ int main(int argc,char* argv[])
     
     ///////////////// Maps statistics variables:
     
-    int binningX_sfactor = 1;
-    int binningY_sfactor = 1;
-    int idx_multi = 0;
-    
-    unsigned long int data_all_sky_LS_events = 1;
-    unsigned long int data_all_sky_HS_events = 1;
+    const static unsigned long int data_all_sky_LS_events = 828;
+    const static unsigned long int data_all_sky_HS_events = 1656;
     
     ///////////////// Dependency paths:
     
     std::string full_reference_path(argv[1]);
     std::string scaled_reference_outpath(argv[2]);
-    std::string scaled_binningX(argv[3]);
-    std::string scaled_binningY(argv[4]);
-    std::string LS_events(argv[5]);
-    std::string multi(argv[6]);
-    
-    binning_sfactor = stoi(scaled_binning);
-    data_all_sky_LS_events = strtoul(LS_events);
-    idx_multi = stoi(multi);
-    
-    if(idx_multi==1)
-        data_all_sky_HS_events = data_all_sky_LS_events * 2;
-    else
-        data_all_sky_HS_events = data_all_sky_LS_events * ((double)10/1.5);
     
     ///////////////// Histos declaration:
     
@@ -48,7 +31,7 @@ int main(int argc,char* argv[])
     
     ///////////////////////////////////////////////////////////////
     
-    read_DAMPE_FullIso(DAMPE_ReferenceMap,full_reference_path,binning_sfactor);
+    read_DAMPE_FullIso(DAMPE_ReferenceMap,full_reference_path);
         
     scale_reference_map(DAMPE_ReferenceMap,DAMPE_ReferenceMap_LS,data_all_sky_LS_events,true);
     scale_reference_map(DAMPE_ReferenceMap,DAMPE_ReferenceMap_HS,data_all_sky_HS_events,false);
@@ -78,8 +61,7 @@ int main(int argc,char* argv[])
     
 }
 
-void read_DAMPE_FullIso(TH2D &DAMPE_FullIso,std::string input_path,int binning_sfactor)
-{
+void read_DAMPE_FullIso(TH2D &DAMPE_FullIso,std::string input_path) {
     
     TFile inputFile(input_path.c_str(),"READ");
     if(inputFile.IsZombie())
@@ -90,7 +72,7 @@ void read_DAMPE_FullIso(TH2D &DAMPE_FullIso,std::string input_path,int binning_s
     else
     {
         TH2D* tmp_reference = (TH2D*)inputFile.Get("Iso_SkyMap_1000");
-        tmp_reference->Rebin2D(binning_sfactor,20);
+        tmp_reference->Rebin2D(40,60);
         
         new (&DAMPE_FullIso) (TH2D)(*(TH2D*)tmp_reference->Clone("DAMPE_ReferenceMap"));
     }

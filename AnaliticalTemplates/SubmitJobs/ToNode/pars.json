@@ -1,0 +1,27 @@
+{ 
+    "batch_try": 50,
+	"n_try": 10,
+    "binX_scaling" : 20,
+    "binY_scaling" : 20,
+    "try_idx" : 0,
+    "submitted" : 0,
+    "jobID" : "testJob",
+    "tmpJobPath" : "/storage/gpfs_data/dampe/users/ecatanzani/Data/DAMPE/MapsFitter/CNAFJobs/tmpAutoJobs/",
+    "n_LS" : 1e+5,
+    
+    "seeds_file_name" : "/seeds.txt",
+    "scaled_out_path" : "/scaled_reference_Isotropic_histos.root",
+    "dampe_iso_map" : "/storage/gpfs_data/dampe/users/ecatanzani/Data/DAMPE/refMapsBuilder/FullHistos.root",
+    "tmp_templates_allsky" : "/AllSkyTemplates.root",
+    "tmp_templates_dampe" : "/DAMPETemplates.root",
+   
+    "tmp_scale_dir" : "/ExeSW/assets/scalingSoftware/",
+    "tmp_template_dir" : "/ExeSW/assets/computeTemplates",
+    "tmp_seeds_dir" : "/ExeSW/assets/produceSeeds",
+    "tmp_analysis_dir" : "/ExeSW",
+
+    "tmp_scale_exe" : "/ExeSW/assets/scalingSoftware/SReference",
+    "tmp_seeds_exe" : "/ExeSW/assets/produceSeeds/PSeeds",
+    "tmp_templates_exe" : "/ExeSW/assets/computeTemplates/Release/JTemplates"
+}
+

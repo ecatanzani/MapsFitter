@@ -45,7 +45,18 @@ pwd
 
 run_exec "_PAR_"
 
+######### Moving result ...
+
 ls -altrh
 mv -v *.root *.txt _OUTDIR_
 rm -rfv "$SANDBOX"
 
+######### Cleaning git repo
+
+S_PATH=/storage/gpfs_data/dampe/users/ecatanzani/MyRepos/DAMPE/MapsFitter/AnaliticalTemplates/SubmitJobs/ToNode/ExeSW/assets/produceSeeds/seeds.txt
+SCALE_PATH=/storage/gpfs_data/dampe/users/ecatanzani/MyRepos/DAMPE/MapsFitter/AnaliticalTemplates/SubmitJobs/ToNode/ExeSW/assets/scalingSoftware/scaled_reference_Isotropic_histos.root
+TEMPL=/storage/gpfs_data/dampe/users/ecatanzani/MyRepos/DAMPE/MapsFitter/AnaliticalTemplates/SubmitJobs/ToNode/ExeSW/assets/computeTemplates/results
+
+mv $S_PATH _OUTDIR_
+rm $SCALE_PATH
+rm $TEMPL/*.root
