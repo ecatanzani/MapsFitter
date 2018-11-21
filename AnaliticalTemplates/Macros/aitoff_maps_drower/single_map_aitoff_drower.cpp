@@ -36,171 +36,17 @@ void draw_grid(TVirtualPad* pad,Double_t canv_x_size,Double_t canv_y_size,Bool_t
 
 void ReverseXAxis(TH2D &histo);
 
-void draw_maps(const std::string resultPath,bool HS=false,bool templates=false,bool invert_Xaxis=false) {
+void draw_map(TH2D* hToDraw,bool invert_Xaxis=false) {
     Bool_t logz = false;
     
-    ////////////////// Template Maps
+    if(invert_Xaxis)
+        ReverseXAxis(*hToDraw);
     
-    TH2D* Template_Iso = nullptr;
-    TH2D* Template_AniNS = nullptr;
-    TH2D* Template_AniEW = nullptr;
-    TH2D* Template_AniFB = nullptr;
+    draw_single_map(hToDraw,logz);
     
-    ////////////////// Data Maps
-    
-    TH2D* Data_Iso = nullptr;
-    TH2D* Data_AniNS = nullptr;
-    TH2D* Data_AniEW = nullptr;
-    TH2D* Data_AniFB = nullptr;
-    TH2D* MixedData_NS_EW = nullptr;
-    TH2D* MixedData_NS_FB = nullptr;
-    TH2D* MixedData_EW_FB = nullptr;
-    TH2D* FullMixedData = nullptr;
-    
-    TFile inputFile(resultPath.c_str(),"READ");
-    if(inputFile.IsZombie()) {
-        std::cerr << "\n\nError opening results TFile " << resultPath.c_str() << "--> Macro finished\n\n";
-        exit(100);
-    }
-    
-    if(!templates)
-    {
-    
-        /////////////////////////////////////////////////////////////// Data Maps
-    
-        if(HS)
-        {
-        
-            Data_Iso = (TH2D*)inputFile.Get("DAMPE_Data_Iso_HS");
-            Data_Iso->SetDirectory(0);
-    
-            Data_AniNS = (TH2D*)inputFile.Get("DAMPE_Data_AniNS_HS");
-            Data_AniNS->SetDirectory(0);
-    
-            Data_AniEW = (TH2D*)inputFile.Get("DAMPE_Data_AniEW_HS");
-            Data_AniEW->SetDirectory(0);
-    
-            Data_AniFB = (TH2D*)inputFile.Get("DAMPE_Data_AniFB_HS");
-            Data_AniFB->SetDirectory(0);
-    
-            MixedData_NS_EW = (TH2D*)inputFile.Get("DAMPE_MixedData_NS_EW_HS");
-            MixedData_NS_EW->SetDirectory(0);
-    
-            MixedData_NS_FB = (TH2D*)inputFile.Get("DAMPE_MixedData_NS_FB_HS");
-            MixedData_NS_FB->SetDirectory(0);
-    
-            MixedData_EW_FB = (TH2D*)inputFile.Get("DAMPE_MixedData_EW_FB_HS");
-            MixedData_EW_FB->SetDirectory(0);
-    
-            FullMixedData = (TH2D*)inputFile.Get("DAMPE_FullMixedData_HS");
-            FullMixedData->SetDirectory(0);
-            
-            if(invert_Xaxis)
-            {
-                ReverseXAxis(*Data_Iso);
-                ReverseXAxis(*Data_AniNS);
-                ReverseXAxis(*Data_AniEW);
-                ReverseXAxis(*Data_AniFB);
-                ReverseXAxis(*MixedData_NS_EW);
-                ReverseXAxis(*MixedData_NS_FB);
-                ReverseXAxis(*MixedData_EW_FB);
-                ReverseXAxis(*FullMixedData);
-            }
-           
-        }
-        else
-        {
-            
-            Data_Iso = (TH2D*)inputFile.Get("DAMPE_Data_Iso_LS");
-            Data_Iso->SetDirectory(0);
-        
-            Data_AniNS = (TH2D*)inputFile.Get("DAMPE_Data_AniNS_LS");
-            Data_AniNS->SetDirectory(0);
-        
-            Data_AniEW = (TH2D*)inputFile.Get("DAMPE_Data_AniEW_LS");
-            Data_AniEW->SetDirectory(0);
-        
-            Data_AniFB = (TH2D*)inputFile.Get("DAMPE_Data_AniFB_LS");
-            Data_AniFB->SetDirectory(0);
-        
-            MixedData_NS_EW = (TH2D*)inputFile.Get("DAMPE_MixedData_NS_EW_LS");
-            MixedData_NS_EW->SetDirectory(0);
-        
-            MixedData_NS_FB = (TH2D*)inputFile.Get("DAMPE_MixedData_NS_FB_LS");
-            MixedData_NS_FB->SetDirectory(0);
-        
-            MixedData_EW_FB = (TH2D*)inputFile.Get("DAMPE_MixedData_EW_FB_LS");
-            MixedData_EW_FB->SetDirectory(0);
-        
-            FullMixedData = (TH2D*)inputFile.Get("DAMPE_FullMixedData_LS");
-            FullMixedData->SetDirectory(0);
-            
-            if(invert_Xaxis)
-            {
-                ReverseXAxis(*Data_Iso);
-                ReverseXAxis(*Data_AniNS);
-                ReverseXAxis(*Data_AniEW);
-                ReverseXAxis(*Data_AniFB);
-                ReverseXAxis(*MixedData_NS_EW);
-                ReverseXAxis(*MixedData_NS_FB);
-                ReverseXAxis(*MixedData_EW_FB);
-                ReverseXAxis(*FullMixedData);
-            }
-        
-        }
-    
-        inputFile.Close();
-        
-        
-        draw_single_map(Data_Iso,logz);
-        draw_single_map(Data_AniNS,logz);
-        draw_single_map(Data_AniEW,logz);
-        draw_single_map(Data_AniFB,logz);
-        draw_single_map(MixedData_NS_EW,logz);
-        draw_single_map(MixedData_NS_FB,logz);
-        draw_single_map(MixedData_EW_FB,logz);
-        draw_single_map(FullMixedData,logz);
-        
-    }
-    else
-    {
-    
-        ////////////////// Templates
-    
-    
-        /////////////////////////////////////////////////////////////// Template Maps
-    
-        //Template_Iso = (TH2D*)inputFile.Get("Template_Iso_HS");
-        Template_Iso = (TH2D*)inputFile.Get("DAMPE_Template_Iso_HS");
-        Template_Iso->SetDirectory(0);
-    
-        //Template_AniNS = (TH2D*)inputFile.Get("Template_AniNS_HS");
-        Template_AniNS = (TH2D*)inputFile.Get("DAMPE_Template_AniNS_HS");
-        Template_AniNS->SetDirectory(0);
-    
-        //Template_AniEW = (TH2D*)inputFile.Get("Template_AniEW_HS");
-        Template_AniEW = (TH2D*)inputFile.Get("DAMPE_Template_AniEW_HS");
-        Template_AniEW->SetDirectory(0);
-    
-        //Template_AniFB = (TH2D*)inputFile.Get("Template_AniFB_HS");
-        Template_AniFB = (TH2D*)inputFile.Get("DAMPE_Template_AniFB_HS");
-        Template_AniFB->SetDirectory(0);
-    
-        inputFile.Close();
-    
-        draw_single_map(Template_Iso,logz);
-        draw_single_map(Template_AniNS,logz);
-        draw_single_map(Template_AniEW,logz);
-        draw_single_map(Template_AniFB,logz);
-    
-    }
-     
 }
 
-
     //////////////////////////////////////////////////////////////////////////// Drawing functions.....
-
-
 
 
 TVirtualPad* draw_single_map(TH2D* h_to_draw,Bool_t logz) {
