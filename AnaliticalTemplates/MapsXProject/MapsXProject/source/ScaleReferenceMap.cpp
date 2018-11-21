@@ -1,20 +1,19 @@
 
 #include "MyHead.h"
 
-void scale_reference_map(TH2D &DAMPE_ReferenceMap,TH2D* histo,bool LS)
+void scale_reference_map(
+                            TH2D* DAMPE_ReferenceMap,
+                            TH2D &DAMPE_ReferenceMap_scaled,
+                            const ULong64_t n_events,
+                            bool low_stat
+                         )
 {
     
-    TH1D* pDAMPE_ReferenceMap = (TH1D*)DAMPE_ReferenceMap.Clone("pDAMPE_ReferenceMap");
+    DAMPE_ReferenceMap->Scale(n_events/(Double_t)DAMPE_ReferenceMap->Integral());
     
-    for(Int_t bX = 1; bX <= histo->GetNbinsX(); ++bX)
-    {
-        for(Int_t bY = 1; bY <= histo->GetNbinsY(); ++bY)
-        {
-            if(LS)
-                histo->FillRandom(pDAMPE_ReferenceMap,data_all_sky_LS_events);
-            else
-                histo->FillRandom(pDAMPE_ReferenceMap,data_all_sky_HS_events);
-        }
-    }
-        
+    if(low_stat)
+        new (&DAMPE_ReferenceMap_scaled) (TH2D) (*(TH2D*)DAMPE_ReferenceMap->Clone("DAMPE_ReferenceMap_LS"));
+    else
+        new (&DAMPE_ReferenceMap_scaled) (TH2D) (*(TH2D*)DAMPE_ReferenceMap->Clone("DAMPE_ReferenceMap_HS"));
+    
 }

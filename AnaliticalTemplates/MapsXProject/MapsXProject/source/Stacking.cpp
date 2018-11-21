@@ -5,11 +5,18 @@ void components_analysis(
                             std::vector<TH1D*> &TemplatesProjections,
                             std::vector<TH1D*> &DataProjections,
                             double resfullFitResults_HS[][8],
-                            std::ofstream &log_file
+                            std::ofstream &log_file,
+                            Double_t NS_anisotropy,
+                            Double_t EW_anisotropy,
+                            Double_t FB_anisotropy,
+                            std::string output_log,
+                            std::string output_root,
+                            time_t time_stamp,
+                            Bool_t write_tmp_histos
                          )
 
 {
-    std::string stacks_out_path = output_path_creator(6);
+    std::string stacks_out_path = output_path_creator(output_log,output_root,5,time_stamp);
     std::vector<THStack> HStack_Data;
     HStack_Data.resize(16);
     
@@ -145,7 +152,7 @@ void components_analysis(
         
         TFile stack_file(stacks_out_path.c_str(),"RECREATE");
         if(stack_file.IsZombie()) {
-            std::cout << "\n\nError writing ROOT Stack TFile. Prorgram finished \n\n";
+            std::cerr << "\n\nError writing ROOT Stack TFile. Prorgram finished \n\n";
             log_file << "\n\nError writing ROOT Stack TFile. Prorgram finished \n\n";
             exit(100);
         }

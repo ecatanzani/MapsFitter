@@ -24,11 +24,18 @@
 		D9973683210E3E4E00D4F20A /* GenerateDAMPEData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D9973682210E3E4E00D4F20A /* GenerateDAMPEData.cpp */; };
 		D9973685210F78E000D4F20A /* ScaleReferenceMap.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D9973684210F78E000D4F20A /* ScaleReferenceMap.cpp */; };
 		D9973687211063FC00D4F20A /* DAMPERelativeMaps.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D9973686211063FC00D4F20A /* DAMPERelativeMaps.cpp */; };
+		D9973F81219D758500F7C260 /* configReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D9973F80219D758500F7C260 /* configReader.cpp */; };
+		D9973F83219E1C9C00F7C260 /* AllSkySimulation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D9973F82219E1C9C00F7C260 /* AllSkySimulation.cpp */; };
+		D9973F85219E283900F7C260 /* readTemplates.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D9973F84219E283900F7C260 /* readTemplates.cpp */; };
+		D9973F87219EB4DE00F7C260 /* DAMPESimulation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D9973F86219EB4DE00F7C260 /* DAMPESimulation.cpp */; };
+		D9973F89219EFDFC00F7C260 /* dataTemplates.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D9973F88219EFDFC00F7C260 /* dataTemplates.cpp */; };
+		D9973F8B219F02FF00F7C260 /* DAMPERelativeSimulation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D9973F8A219F02FF00F7C260 /* DAMPERelativeSimulation.cpp */; };
 		D9B263E220DC05B6004215BB /* MapsLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D9B263E120DC05B6004215BB /* MapsLoader.cpp */; };
 		D9B4092B20D420300035AF80 /* GenerateTemplates.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D9B4092A20D420300035AF80 /* GenerateTemplates.cpp */; };
 		D9B4092D20D441210035AF80 /* NormalizeTemplates.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D9B4092C20D441210035AF80 /* NormalizeTemplates.cpp */; };
 		D9B4092F20D449AE0035AF80 /* GenerateData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D9B4092E20D449AE0035AF80 /* GenerateData.cpp */; };
 		D9B4093120D46AE40035AF80 /* NormalizeData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D9B4093020D46AE40035AF80 /* NormalizeData.cpp */; };
+		D9B4AB8521A322980010B28D /* dataInterface.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D9B4AB8421A322980010B28D /* dataInterface.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -62,12 +69,19 @@
 		D9973682210E3E4E00D4F20A /* GenerateDAMPEData.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = GenerateDAMPEData.cpp; sourceTree = "<group>"; };
 		D9973684210F78E000D4F20A /* ScaleReferenceMap.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ScaleReferenceMap.cpp; sourceTree = "<group>"; };
 		D9973686211063FC00D4F20A /* DAMPERelativeMaps.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = DAMPERelativeMaps.cpp; sourceTree = "<group>"; };
+		D9973F80219D758500F7C260 /* configReader.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = configReader.cpp; sourceTree = "<group>"; };
+		D9973F82219E1C9C00F7C260 /* AllSkySimulation.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = AllSkySimulation.cpp; sourceTree = "<group>"; };
+		D9973F84219E283900F7C260 /* readTemplates.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = readTemplates.cpp; sourceTree = "<group>"; };
+		D9973F86219EB4DE00F7C260 /* DAMPESimulation.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = DAMPESimulation.cpp; sourceTree = "<group>"; };
+		D9973F88219EFDFC00F7C260 /* dataTemplates.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = dataTemplates.cpp; sourceTree = "<group>"; };
+		D9973F8A219F02FF00F7C260 /* DAMPERelativeSimulation.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = DAMPERelativeSimulation.cpp; sourceTree = "<group>"; };
 		D9B263E120DC05B6004215BB /* MapsLoader.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = MapsLoader.cpp; sourceTree = "<group>"; };
 		D9B408F820CA91390035AF80 /* MyHead.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MyHead.h; path = include/MyHead.h; sourceTree = "<group>"; };
 		D9B4092A20D420300035AF80 /* GenerateTemplates.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = GenerateTemplates.cpp; sourceTree = "<group>"; };
 		D9B4092C20D441210035AF80 /* NormalizeTemplates.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = NormalizeTemplates.cpp; sourceTree = "<group>"; };
 		D9B4092E20D449AE0035AF80 /* GenerateData.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = GenerateData.cpp; sourceTree = "<group>"; };
 		D9B4093020D46AE40035AF80 /* NormalizeData.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = NormalizeData.cpp; sourceTree = "<group>"; };
+		D9B4AB8421A322980010B28D /* dataInterface.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = dataInterface.cpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -139,6 +153,13 @@
 				D9973682210E3E4E00D4F20A /* GenerateDAMPEData.cpp */,
 				D9973684210F78E000D4F20A /* ScaleReferenceMap.cpp */,
 				D9973686211063FC00D4F20A /* DAMPERelativeMaps.cpp */,
+				D9973F80219D758500F7C260 /* configReader.cpp */,
+				D9973F82219E1C9C00F7C260 /* AllSkySimulation.cpp */,
+				D9973F84219E283900F7C260 /* readTemplates.cpp */,
+				D9973F86219EB4DE00F7C260 /* DAMPESimulation.cpp */,
+				D9973F88219EFDFC00F7C260 /* dataTemplates.cpp */,
+				D9973F8A219F02FF00F7C260 /* DAMPERelativeSimulation.cpp */,
+				D9B4AB8421A322980010B28D /* dataInterface.cpp */,
 			);
 			path = source;
 			sourceTree = "<group>";
@@ -199,6 +220,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D9973F8B219F02FF00F7C260 /* DAMPERelativeSimulation.cpp in Sources */,
 				D92D241E20E66794002154C2 /* Engine.cpp in Sources */,
 				D9B4092F20D449AE0035AF80 /* GenerateData.cpp in Sources */,
 				D9730EC820CA8E6800808C63 /* CustomBinning.cpp in Sources */,
@@ -210,16 +232,22 @@
 				D9730EC320CA8E6800808C63 /* LogsWriter.cpp in Sources */,
 				D9B263E220DC05B6004215BB /* MapsLoader.cpp in Sources */,
 				D9973685210F78E000D4F20A /* ScaleReferenceMap.cpp in Sources */,
+				D9B4AB8521A322980010B28D /* dataInterface.cpp in Sources */,
 				D9B4092D20D441210035AF80 /* NormalizeTemplates.cpp in Sources */,
 				D94FE54C2107650300C1F8F5 /* DAMPE_Templates.cpp in Sources */,
 				D91C70A720D518ED0042070F /* TemplateFit.cpp in Sources */,
+				D9973F87219EB4DE00F7C260 /* DAMPESimulation.cpp in Sources */,
 				D95D149220F4E53D0077A32E /* CleanedHistos.cpp in Sources */,
 				D9973683210E3E4E00D4F20A /* GenerateDAMPEData.cpp in Sources */,
 				D972BE9720FF224D00FA89A2 /* Stacking.cpp in Sources */,
 				D972BE9920FF53B900FA89A2 /* AniLevel.cpp in Sources */,
+				D9973F83219E1C9C00F7C260 /* AllSkySimulation.cpp in Sources */,
+				D9973F85219E283900F7C260 /* readTemplates.cpp in Sources */,
+				D9973F81219D758500F7C260 /* configReader.cpp in Sources */,
 				D9973687211063FC00D4F20A /* DAMPERelativeMaps.cpp in Sources */,
 				D901019520ECDB3900051C18 /* ReadSatelliteData.cpp in Sources */,
 				D94FE54E210AF53000C1F8F5 /* SimulationSeeds.cpp in Sources */,
+				D9973F89219EFDFC00F7C260 /* dataTemplates.cpp in Sources */,
 				D95D148B20F3F9E00077A32E /* TF2MaxValue.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -340,8 +368,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				HEADER_SEARCH_PATHS = /Applications/root6/include;
-				LIBRARY_SEARCH_PATHS = /Applications/root6/lib;
+				HEADER_SEARCH_PATHS = /Applications/root/include;
+				LIBRARY_SEARCH_PATHS = /Applications/root/lib;
 				OTHER_LDFLAGS = (
 					"-lCore",
 					"-lRIO",
@@ -364,8 +392,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				HEADER_SEARCH_PATHS = /Applications/root6/include;
-				LIBRARY_SEARCH_PATHS = /Applications/root6/lib;
+				HEADER_SEARCH_PATHS = /Applications/root/include;
+				LIBRARY_SEARCH_PATHS = /Applications/root/lib;
 				OTHER_LDFLAGS = (
 					"-lCore",
 					"-lRIO",

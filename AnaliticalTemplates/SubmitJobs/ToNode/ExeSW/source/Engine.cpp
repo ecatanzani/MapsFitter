@@ -35,7 +35,7 @@ void generate_and_fit(std::ofstream &output_log_file,Int_t s_idx,Int_t s_batch)
     
     TFile tree_file(tree_out_path.c_str(),"RECREATE");
     if(tree_file.IsZombie()) {
-        std::cout << "\n\nError writing ROOT TTree TFile. Prorgram finished \n\n";
+        std::cerra << "\n\nError writing ROOT TTree TFile. Prorgram finished \n\n";
         output_log_file << "\n\nError writing ROOT TTree TFile. Prorgram finished \n\n";
         exit(100);
     }

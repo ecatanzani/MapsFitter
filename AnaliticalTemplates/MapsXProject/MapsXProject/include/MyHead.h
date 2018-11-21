@@ -11,7 +11,6 @@
 #include <string>
 #include <sys/stat.h>
 #include <unistd.h>
-#include <boost/progress.hpp>
 
 ///// ROOT libraries
 
@@ -58,164 +57,42 @@
 #include "RooArgList.h"
 #include "RooMsgService.h"
 
-
-//////////////////////////// Generation Parameters ////////////////////////////
-
-///////////////////////////////////////////////////////////////////////////////
-
-const static unsigned long int data_all_sky_LS_events = 3e+6;
-const static unsigned long int data_all_sky_HS_events = 6e+6;
-
-const static time_t time_stamp=time(0);                                   //Setting timestamp for the out files
-
-//const static Int_t ntry = 1e+2;
-const static Int_t ntry = 1;
-
-const static bool write_tmp_histos = false;
-
-const static Int_t ani_values = 3;
-static Double_t NS_anisotropy[ani_values] = {0.1,0.01,0.001};
-static Double_t EW_anisotropy[ani_values] = {0.1,0.01,0.001};
-static Double_t FB_anisotropy[ani_values] = {0.1,0.01,0.001};
-
-/////////////////////////////// Dependency Paths //////////////////////////////
-
-///////////////////////////////////////////////////////////////////////////////
-
-
-// ================= macOS
-
-//////////////////////////// Outh paths for logs and ROOT files:
-
-const static std::string output_log = "/Users/enrico/Documents/Università/Magistrale/Tesi/MyCode/MyRepos/GitHub/MapsFitting/AnaliticalTemplates/logs/";
-const static std::string output_root = "/Users/enrico/Documents/Università/Magistrale/Tesi/MyCode/MyRepos/GitHub/MapsFitting/AnaliticalTemplates/results/";
-const static std::string DAMPE_Iso_Map = "/Users/enrico/Documents/Università/Magistrale/Tesi/MyCode/MyRepos/GitHub/Salomon/results/fullHistos.root";
-const static std::string seeds_path = "/Users/enrico/Documents/Università/Magistrale/Tesi/MyCode/MyRepos/GitHub/MapsFitting/AnaliticalTemplates/seeds.txt";
-
-//////////////////////////////// SBI Parameters ///////////////////////////////
-
-///////////////////////////////////////////////////////////////////////////////
-
-class fitResult
-{
-    public:
-    
-    Double_t inputAni[3];
-    
-    Double_t chi2_LS[8];
-    Double_t ndf_LS[8];
-    Double_t fit_par_LS[8][4];
-    Double_t fit_err_LS[8][4];
-    Double_t delta_LS[8];
-    Double_t sum_par_LS[8];
-    
-    Double_t CMatrix_Iso_LS[4][4];
-    Double_t CMatrix_NS_LS[4][4];
-    Double_t CMatrix_EW_LS[4][4];
-    Double_t CMatrix_FB_LS[4][4];
-    Double_t CMatrix_NS_EW_LS[4][4];
-    Double_t CMatrix_NS_FB_LS[4][4];
-    Double_t CMatrix_EW_FB_LS[4][4];
-    Double_t CMatrix_Full_LS[4][4];
-    
-    Int_t theta_binHistos_LS;
-    Int_t phi_binHistos_LS;
-    
-    ULong64_t events_LS;
-    
-    Double_t chi2_HS[8];
-    Double_t ndf_HS[8];
-    Double_t fit_par_HS[8][4];
-    Double_t fit_err_HS[8][4];
-    Double_t delta_HS[8];
-    Double_t sum_par_HS[8];
-    
-    Double_t CMatrix_Iso_HS[4][4];
-    Double_t CMatrix_NS_HS[4][4];
-    Double_t CMatrix_EW_HS[4][4];
-    Double_t CMatrix_FB_HS[4][4];
-    Double_t CMatrix_NS_EW_HS[4][4];
-    Double_t CMatrix_NS_FB_HS[4][4];
-    Double_t CMatrix_EW_FB_HS[4][4];
-    Double_t CMatrix_Full_HS[4][4];
-    
-    Int_t theta_binHistos_HS;
-    Int_t phi_binHistos_HS;
-    
-    ULong64_t events_HS;
-    
-    
-    fitResult()
-    {
-        
-        for(Int_t idx = 0; idx < 8; ++idx)
-        {
-            chi2_LS[idx] = -1;
-            ndf_LS[idx] = -1;
-            delta_LS[idx] = -1;
-            sum_par_LS[idx] = -999;
-            
-            chi2_HS[idx] = -1;
-            ndf_HS[idx] = -1;
-            delta_HS[idx] = -1;
-            sum_par_HS[idx] = -999;
-            
-            for(Int_t k = 0; k < 4; ++k)
-            {
-                fit_par_LS[idx][k] = -1;
-                fit_err_LS[idx][k] = -1;
-                
-                fit_par_HS[idx][k] = -1;
-                fit_err_HS[idx][k] = -1;
-                
-                for(int j = 0; j < 4; ++j)
-                {
-                    CMatrix_Iso_LS[k][j] = -1;
-                    CMatrix_NS_LS[k][j] = -1;
-                    CMatrix_EW_LS[k][j] = -1;
-                    CMatrix_FB_LS[k][j] = -1;
-                    CMatrix_NS_EW_LS[k][j] = -1;
-                    CMatrix_NS_FB_LS[k][j] = -1;
-                    CMatrix_EW_FB_LS[k][j] = -1;
-                    CMatrix_Full_LS[k][j] = -1;
-                    
-                    CMatrix_Iso_HS[k][j] = -1;
-                    CMatrix_NS_HS[k][j] = -1;
-                    CMatrix_EW_HS[k][j] = -1;
-                    CMatrix_FB_HS[k][j] = -1;
-                    CMatrix_NS_EW_HS[k][j] = -1;
-                    CMatrix_NS_FB_HS[k][j] = -1;
-                    CMatrix_EW_FB_HS[k][j] = -1;
-                    CMatrix_Full_HS[k][j] = -1;
-                    
-                }
-            }
-        }
-        
-        theta_binHistos_LS = 0;
-        phi_binHistos_LS = 0;
-        theta_binHistos_HS = 0;
-        phi_binHistos_HS = 0;
-        
-        for(Int_t idx = 0; idx < 3; ++idx)
-            inputAni[idx] = -1;
-        
-        events_LS = 0;
-        events_HS = 0;
-        
-    }
-    
-    ~fitResult() { }
-    
-};
-
-
 ///////////////////////////////////////////////////////////////////////////////////////////// Functions         ;-)
 
 ////////////////// Stuff functions //////////////////
 
-extern std::string output_path_creator(const Int_t out_choose);
-extern void create_and_initialize_log(std::ofstream &log_file);
+extern void config_reader(
+                            ULong64_t &data_LS_events,
+                            ULong64_t &data_HS_events,
+                            UInt_t &NbinX,
+                            UInt_t &NbinY,
+                            Bool_t &write_tmp_histos,
+                            Bool_t &all_sky_simulation,
+                            Bool_t &DAMPE_simulation,
+                            Bool_t &DAMPE_relative_simulation,
+                            std::vector<Double_t> &NS_anisotropy,
+                            std::vector<Double_t> &EW_anisotropy,
+                            std::vector<Double_t> &FB_anisotropy,
+                            std::string &output_log,
+                            std::string &output_root,
+                            std::string &DAMPE_Iso_Map,
+                            std::string &seeds_path
+                          );
+
+extern int numerize(std::string tmp_string);
+
+extern std::string output_path_creator(
+                                           std::string output_log,
+                                           std::string output_root,
+                                           const Int_t out_choose,
+                                           time_t time_stamp,
+                                           Double_t NS_dipole = 0,
+                                           Double_t EW_dipole = 0,
+                                           Double_t FB_dipole = 0,
+                                           bool DAMPE = false
+                                       );
+
+extern void create_and_initialize_log(std::ofstream &log_file,ULong64_t data_LS_events,ULong64_t data_HS_events,time_t time_stamp);
 extern void log_file_init(std::ofstream &out_file);
 
 extern void TH2toTH1_obj(TH1D &Histo1D,TH2D &Histo2D);
@@ -224,10 +101,45 @@ extern void TH2toTH1_ptr(TH1D &Histo1D,TH2D* Histo2D);
 extern void create_binning(Int_t n_bin_lat,Double_t lat_bin_min,Double_t lat_bin_max,Double_t* &binning,Bool_t cos_scale);
 extern void load_1D_histos(TH1D Templates_LS[],TH1D &DataHisto_I_LS,TH1D &DataHisto_NS_LS,TH1D &DataHisto_EW_LS,TH1D &DataHisto_FB_LS,TH1D &MixedDataHisto_NS_EW_LS,TH1D &MixedDataHisto_NS_FB_LS,TH1D &MixedDataHisto_EW_FB_LS,TH1D &FullMixedDataHisto_LS,TH1D Templates_HS[],TH1D &DataHisto_I_HS,TH1D &DataHisto_NS_HS,TH1D &DataHisto_EW_HS,TH1D &DataHisto_FB_HS,TH1D &MixedDataHisto_NS_EW_HS,TH1D &MixedDataHisto_NS_FB_HS,TH1D &MixedDataHisto_EW_FB_HS,TH1D &FullMixedDataHisto_HS,std::string template_path,std::string data_path,std::ofstream &log_file);
 extern void read_from_file(std::string template_path,std::string data_path,std::ofstream &output_log_file);
-extern void generate_and_fit(std::ofstream &output_log_file);
-extern void generate_templates(std::ofstream &log_file,std::string &templates_path);
+
+extern void generate_and_fit(
+                                 ULong64_t data_LS_events,
+                                 ULong64_t data_HS_events,
+                                 Bool_t write_tmp_histos,
+                                 Bool_t all_sky_simulation,
+                                 Bool_t DAMPE_simulation,
+                                 Bool_t DAMPE_relative_simulation,
+                                 std::vector<Double_t> &NS_anisotropy,
+                                 std::vector<Double_t> &EW_anisotropy,
+                                 std::vector<Double_t> &FB_anisotropy,
+                                 std::string output_log,
+                                 std::string output_root,
+                                 std::string DAMPE_Iso_Map,
+                                 std::string seeds_path,
+                                 UInt_t ani_values,
+                                 std::ofstream &output_log_file,
+                                 time_t time_stamp
+                             );
+
+extern void generate_templates(
+                                   std::ofstream &output_log_file,
+                                   ULong64_t data_LS_events,
+                                   ULong64_t data_HS_events,
+                                   std::string output_log,
+                                   std::string output_root,
+                                   std::string DAMPE_Iso_Map,
+                                   time_t time_stamp
+                               );
+
 extern void generate_data(std::ofstream &log_file,std::string &data_path);
-extern void read_DAMPE_FullIso(TH2D &DAMPE_FullIso);
+
+extern void read_DAMPE_FullIso(
+                                TH2D &DAMPE_ReferenceMap_LS,
+                                TH2D &DAMPE_ReferenceMap_HS,
+                                ULong64_t data_LS_events,
+                                ULong64_t data_HS_events,
+                                std::string DAMPE_Iso_Map
+                               );
 
 extern void get_DAMPE_templates(
                                     TH2D &DAMPE_Template_Iso_LS,
@@ -238,7 +150,8 @@ extern void get_DAMPE_templates(
                                     TH2D &DAMPE_Template_AniNS_HS,
                                     TH2D &DAMPE_Template_AniEW_HS,
                                     TH2D &DAMPE_Template_AniFB_HS,
-                                    TH2D &DAMPE_ReferenceMap,
+                                    TH2D &DAMPE_ReferenceMap_LS,
+                                    TH2D &DAMPE_ReferenceMap_HS,
                                     TH2D &Template_Iso_LS,
                                     TH2D &Template_AniNS_LS,
                                     TH2D &Template_AniEW_LS,
@@ -248,6 +161,34 @@ extern void get_DAMPE_templates(
                                     TH2D &Template_AniEW_HS,
                                     TH2D &Template_AniFB_HS
                                 );
+
+extern void read_templates(
+                                TH2D &Template_Iso_LS,
+                                TH2D &Template_AniNS_LS,
+                                TH2D &Template_AniEW_LS,
+                                TH2D &Template_AniFB_LS,
+                                TH2D &Template_Iso_HS,
+                                TH2D &Template_AniNS_HS,
+                                TH2D &Template_AniEW_HS,
+                                TH2D &Template_AniFB_HS,
+                                std::ofstream &output_log_file,
+                                bool DAMPE,
+                                std::string template_out_path,
+                                std::string DAMPE_template_out_path
+                           );
+
+extern void read_relative_templates(
+                                        TH2D &relative_DAMPE_Template_Iso_LS,
+                                        TH2D &relative_DAMPE_Template_AniNS_LS,
+                                        TH2D &relative_DAMPE_Template_AniEW_LS,
+                                        TH2D &relative_DAMPE_Template_AniFB_LS,
+                                        TH2D &relative_DAMPE_Template_Iso_HS,
+                                        TH2D &relative_DAMPE_Template_AniNS_HS,
+                                        TH2D &relative_DAMPE_Template_AniEW_HS,
+                                        TH2D &relative_DAMPE_Template_AniFB_HS,
+                                        std::ofstream &output_log_file,
+                                        std::string DAMPE_template_out_path
+                                    );
 
 extern void normalize_DAMPE_templates(
                                         TH2D* tmp_DAMPE_Template_Iso_LS,
@@ -262,186 +203,136 @@ extern void normalize_DAMPE_templates(
 
 extern Double_t compute_integral(TH2D* histo);
 
-extern void create_simulation_seeds();
+extern void create_simulation_seeds(std::string seeds_path,UInt_t ani_values);
 extern inline bool path_exists (const std::string& path);
 extern bool repetition_seed(UInt_t tmp_seed,std::vector<UInt_t> &vseeds,Int_t position);
 
-extern void scale_reference_map(TH2D &DAMPE_ReferenceMap,TH2D* histo,bool LS);
-extern void get_relative_histo(TH2D &relative_DAMPE_histo,TH2D* data_DAMPE_histo,TH2D* reference_DAMPE_histo);
+extern void scale_reference_map(
+                                    TH2D* DAMPE_ReferenceMap,
+                                    TH2D &DAMPE_ReferenceMap_scaled,
+                                    const ULong64_t n_events,
+                                    bool low_stat
+                                );
+
+extern void get_relative_histo(TH2D &relative_DAMPE_histo,TH2D* data_DAMPE_histo,TH2D &reference_DAMPE_histo);
 
 ////////////////// Analysis functions //////////////////
 
+extern void compute_templates(
+                                std::string output_log,
+                                std::string output_root,
+                                time_t time_stamp,
+                                std::ofstream &output_log_file,
+                                TH2D &DAMPE_ReferenceMap_LS,
+                                TH2D &DAMPE_ReferenceMap_HS,
+                                std::string template_out_path,
+                                std::string DAMPE_template_out_path
+                              );
+
 extern void generate_LS_templates(
-                                  TH2D &Template_Iso_LS,
-                                  TH2D &Template_AniNS_LS,
-                                  TH2D &Template_AniEW_LS,
-                                  TH2D &Template_AniFB_LS,
-                                  TH1D &Template_hwI,
-                                  TH1D &Template_hwNS,
-                                  TH1D &Template_hwEW,
-                                  TH1D &Template_hwFB,
-                                  std::ofstream &log_file,
-                                  TCanvas &FCanvas,
-                                  TF2 &dI,
-                                  TF2 &dNS,
-                                  TF2 &dEW,
-                                  TF2 &dFB
+                                      TH2D &Template_Iso_LS,
+                                      TH2D &Template_AniNS_LS,
+                                      TH2D &Template_AniEW_LS,
+                                      TH2D &Template_AniFB_LS,
+                                      std::ofstream &log_file,
+                                      TCanvas &FCanvas,
+                                      TF2 &dI,
+                                      TF2 &dNS,
+                                      TF2 &dEW,
+                                      TF2 &dFB
                                   );
 
 extern void generate_HS_templates(
-                                  TH2D &Template_Iso_HS,
-                                  TH2D &Template_AniNS_HS,
-                                  TH2D &Template_AniEW_HS,
-                                  TH2D &Template_AniFB_HS,
-                                  TH1D &Template_hwI,
-                                  TH1D &Template_hwNS,
-                                  TH1D &Template_hwEW,
-                                  TH1D &Template_hwFB,
-                                  std::ofstream &log_file,
-                                  TF2 &dI,
-                                  TF2 &dNS,
-                                  TF2 &dEW,
-                                  TF2 &dFB
+                                      TH2D &Template_Iso_HS,
+                                      TH2D &Template_AniNS_HS,
+                                      TH2D &Template_AniEW_HS,
+                                      TH2D &Template_AniFB_HS,
+                                      std::ofstream &log_file,
+                                      TF2 &dI,
+                                      TF2 &dNS,
+                                      TF2 &dEW,
+                                      TF2 &dFB
                                   );
 
 extern void generate_LS_data(
-                             Double_t NS_anisotropy,
-                             Double_t EW_anisotropy,
-                             Double_t FB_anisotropy,
-                             TH2D* Data_Iso_LS,
-                             TH2D* Data_AniNS_LS,
-                             TH2D* Data_AniEW_LS,
-                             TH2D* Data_AniFB_LS,
-                             TH2D* MixedData_NS_EW_LS,
-                             TH2D* MixedData_NS_FB_LS,
-                             TH2D* MixedData_EW_FB_LS,
-                             TH2D* FullMixedData_LS,
-                             TH1D &Data_hwI,
-                             TH1D &Data_hwNS,
-                             TH1D &Data_hwEW,
-                             TH1D &Data_hwFB,
-                             TF2 &dI,
-                             TF2 &dNS,
-                             TF2 &dEW,
-                             TF2 &dFB,
-                             TH2D &Template_Iso_LS,
-                             TH2D &Template_AniNS_LS,
-                             TH2D &Template_AniEW_LS,
-                             TH2D &Template_AniFB_LS,
-                             std::ofstream &log_file,
-                             TRandom3 &r_gen
+                                Double_t NS_anisotropy,
+                                Double_t EW_anisotropy,
+                                Double_t FB_anisotropy,
+                                TH2D* Data_Iso_LS,
+                                TH2D* Data_AniNS_LS,
+                                TH2D* Data_AniEW_LS,
+                                TH2D* Data_AniFB_LS,
+                                TH2D* MixedData_NS_EW_LS,
+                                TH2D* MixedData_NS_FB_LS,
+                                TH2D* MixedData_EW_FB_LS,
+                                TH2D* FullMixedData_LS,
+                                TH2D &Template_Iso_LS,
+                                TH2D &Template_AniNS_LS,
+                                TH2D &Template_AniEW_LS,
+                                TH2D &Template_AniFB_LS,
+                                std::ofstream &log_file,
+                                UInt_t tmp_seed,
+                                ULong64_t data_LS_events
                              );
 
 extern void generate_HS_data(
-                             Double_t NS_anisotropy,
-                             Double_t EW_anisotropy,
-                             Double_t FB_anisotropy,
-                             TH2D* Data_Iso_HS,
-                             TH2D* Data_AniNS_HS,
-                             TH2D* Data_AniEW_HS,
-                             TH2D* Data_AniFB_HS,
-                             TH2D* MixedData_NS_EW_HS,
-                             TH2D* MixedData_NS_FB_HS,
-                             TH2D* MixedData_EW_FB_HS,
-                             TH2D* FullMixedData_HS,
-                             TH1D &Data_hwI,
-                             TH1D &Data_hwNS,
-                             TH1D &Data_hwEW,
-                             TH1D &Data_hwFB,
-                             TF2 &dI,
-                             TF2 &dNS,
-                             TF2 &dEW,
-                             TF2 &dFB,
-                             TH2D &Template_Iso_HS,
-                             TH2D &Template_AniNS_HS,
-                             TH2D &Template_AniEW_HS,
-                             TH2D &Template_AniFB_HS,
-                             std::ofstream &log_file,
-                             TRandom3 &r_gen
+                                Double_t NS_anisotropy,
+                                Double_t EW_anisotropy,
+                                Double_t FB_anisotropy,
+                                TH2D* Data_Iso_HS,
+                                TH2D* Data_AniNS_HS,
+                                TH2D* Data_AniEW_HS,
+                                TH2D* Data_AniFB_HS,
+                                TH2D* MixedData_NS_EW_HS,
+                                TH2D* MixedData_NS_FB_HS,
+                                TH2D* MixedData_EW_FB_HS,
+                                TH2D* FullMixedData_HS,
+                                TH2D &Template_Iso_HS,
+                                TH2D &Template_AniNS_HS,
+                                TH2D &Template_AniEW_HS,
+                                TH2D &Template_AniFB_HS,
+                                std::ofstream &log_file,
+                                UInt_t tmp_seed,
+                                ULong64_t data_HS_events
                              );
 
-
-extern void MC_generate_LS_data(
-                                TH2D &Data_Iso_LS,
-                                TH2D &Data_AniNS_LS,
-                                TH2D &Data_AniEW_LS,
-                                TH2D &Data_AniFB_LS,
-                                TH2D &MixedData_NS_EW_LS,
-                                TH2D &MixedData_NS_FB_LS,
-                                TH2D &MixedData_EW_FB_LS,
-                                TH2D &FullMixedData_LS,
-                                TH1D &Data_hwI,
-                                TH1D &Data_hwNS,
-                                TH1D &Data_hwEW,
-                                TH1D &Data_hwFB,
-                                TF2 &dI,
-                                TF2 &dNS,
-                                TF2 &dEW,
-                                TF2 &dFB,
-                                std::ofstream &log_file,
-                                TRandom3 &r_gen
-                                );
-
-extern void MC_generate_HS_data(
-                                TH2D &Data_Iso_HS,
-                                TH2D &Data_AniNS_HS,
-                                TH2D &Data_AniEW_HS,
-                                TH2D &Data_AniFB_HS,
-                                TH2D &MixedData_NS_EW_HS,
-                                TH2D &MixedData_NS_FB_HS,
-                                TH2D &MixedData_EW_FB_HS,
-                                TH2D &FullMixedData_HS,
-                                TH1D &Data_hwI,
-                                TH1D &Data_hwNS,
-                                TH1D &Data_hwEW,
-                                TH1D &Data_hwFB,
-                                TF2 &dI,
-                                TF2 &dNS,
-                                TF2 &dEW,
-                                TF2 &dFB,
-                                std::ofstream &log_file,
-                                TRandom3 &r_gen
-                                );
-
-extern void generate_DAMPE_LS_data(
+extern void compute_data_template(
+                                    TH2D &h_Template_Data,
+                                    TH2D &h_Template_Iso,
+                                    TH2D &h_Template_AniNS,
+                                    TH2D &h_Template_AniEW,
+                                    TH2D &h_Template_AniFB,
                                     Double_t NS_anisotropy,
                                     Double_t EW_anisotropy,
                                     Double_t FB_anisotropy,
-                                    TH2D* DAMPE_Data_Iso_LS,
-                                    TH2D* DAMPE_Data_AniNS_LS,
-                                    TH2D* DAMPE_Data_AniEW_LS,
-                                    TH2D* DAMPE_Data_AniFB_LS,
-                                    TH2D* DAMPE_MixedData_NS_EW_LS,
-                                    TH2D* DAMPE_MixedData_NS_FB_LS,
-                                    TH2D* DAMPE_MixedData_EW_FB_LS,
-                                    TH2D* DAMPE_FullMixedData_LS,
-                                    TH2D &DAMPE_Template_Iso_LS,
-                                    TH2D &DAMPE_Template_AniNS_LS,
-                                    TH2D &DAMPE_Template_AniEW_LS,
-                                    TH2D &DAMPE_Template_AniFB_LS,
-                                    std::ofstream &output_log_file,
-                                    TRandom3 &r_gen
-                                   );
+                                    std::string histo_name
+                                  );
 
-extern void generate_DAMPE_HS_data(
-                                    Double_t NS_anisotropy,
-                                    Double_t EW_anisotropy,
-                                    Double_t FB_anisotropy,
-                                    TH2D* DAMPE_Data_Iso_HS,
-                                    TH2D* DAMPE_Data_AniNS_HS,
-                                    TH2D* DAMPE_Data_AniEW_HS,
-                                    TH2D* DAMPE_Data_AniFB_HS,
-                                    TH2D* DAMPE_MixedData_NS_EW_HS,
-                                    TH2D* DAMPE_MixedData_NS_FB_HS,
-                                    TH2D* DAMPE_MixedData_EW_FB_HS,
-                                    TH2D* DAMPE_FullMixedData_HS,
-                                    TH2D &DAMPE_Template_Iso_HS,
-                                    TH2D &DAMPE_Template_AniNS_HS,
-                                    TH2D &DAMPE_Template_AniEW_HS,
-                                    TH2D &DAMPE_Template_AniFB_HS,
-                                    std::ofstream &output_log_file,
-                                    TRandom3 &r_gen
-                                   );
+extern void interface_allSky_simulation(
+                                            std::ofstream &output_log_file,
+                                            std::string output_log,
+                                            std::string output_root,
+                                            time_t time_stamp,
+                                            Double_t NS_anisotropy,
+                                            Double_t EW_anisotropy,
+                                            Double_t FB_anisotropy,
+                                            UInt_t tmp_seed,
+                                            ULong64_t data_LS_events,
+                                            ULong64_t data_HS_events
+                                        );
+
+extern void interface_DAMPE_simulation(
+                                           std::ofstream &output_log_file,
+                                           std::string output_log,
+                                           std::string output_root,
+                                           time_t time_stamp,
+                                           Double_t NS_anisotropy,
+                                           Double_t EW_anisotropy,
+                                           Double_t FB_anisotropy,
+                                           UInt_t tmp_seed,
+                                           ULong64_t data_LS_events,
+                                           ULong64_t data_HS_events
+                                       );
 
 extern Double_t get_TF2_max(TF2 &function,Double_t theta);
 extern Double_t get_XY_TF2_max(TF2 &function,Double_t theta,Double_t phi);
@@ -476,90 +367,116 @@ extern void normalize_HS_templates(TH2D &Template_Iso_HS,TH2D &Template_AniNS_HS
 extern void normalize_LS_data(TH2D &Data_Iso_LS,TH2D &Data_AniNS_LS,TH2D &Data_AniEW_LS,TH2D &Data_AniFB_LS,TH2D &MixedData_NS_EW_LS,TH2D &MixedData_NS_FB_LS,TH2D &MixedData_EW_FB_LS,TH2D &FullMixedData_LS,std::ofstream &log_file);
 extern void normalize_HS_data(TH2D &Data_Iso_HS,TH2D &Data_AniNS_HS,TH2D &Data_AniEW_HS,TH2D &Data_AniFB_HS,TH2D &MixedData_NS_EW_HS,TH2D &MixedData_NS_FB_HS,TH2D &MixedData_EW_FB_HS,TH2D &FullMixedData_HS,std::ofstream &log_file);
 
-extern void getPull(TH1* Data,TH1* Templates[],Double_t res[],TH1D &hPull);
+extern void getPull(TH1* Data,TH1* Templates[],Double_t res[],TH1D &hPull,bool relative_fit=false,bool ex_fit=false);
 
 extern void generate_DAMPE_templates(TH2D &DAMPE_FullIso,TH2D &DAMPE_Template_Iso,TH2D &DAMPE_Template_AniNS,TH2D &DAMPE_Template_AniEW,TH2D &DAMPE_Template_AniFB,TH1D &DAMPE_Template_hwNS,TH1D &DAMPE_Template_hwEW,TH1D &DAMPE_Template_hwFB,std::ofstream &log_file,TF2 &dI,TF2 &dNS,TF2 &dEW,TF2 &dFB,TCanvas &FCanvas);
 
 extern void components_analysis(
-                                std::vector<TH1D*> &TemplatesProjections,
-                                std::vector<TH1D*> &DataProjections,
-                                double resfullFitResults_HS[][8],
-                                std::ofstream &log_file
+                                    std::vector<TH1D*> &TemplatesProjections,
+                                    std::vector<TH1D*> &DataProjections,
+                                    double resfullFitResults_HS[][8],
+                                    std::ofstream &log_file,
+                                    Double_t NS_anisotropy,
+                                    Double_t EW_anisotropy,
+                                    Double_t FB_anisotropy,
+                                    std::string output_log,
+                                    std::string output_root,
+                                    time_t time_stamp,
+                                    Bool_t write_tmp_histos
                                 );
 
 extern double compute_ani_level(double covMatrix[][4],double parameters[],double par_err[],std::ofstream &log_file);
 
 extern void allSky_singleTry_fit(
                                     std::ofstream &output_log_file,
-                                    std::string &template_out_path,
-                                    std::string &data_out_path,
-                                    std::string &pools_out_path,
-                                    std::string &projections_out_path,
-                                    TH2D &Template_Iso_LS,
-                                    TH2D &Template_AniNS_LS,
-                                    TH2D &Template_AniEW_LS,
-                                    TH2D &Template_AniFB_LS,
-                                    TH2D &Template_Iso_HS,
-                                    TH2D &Template_AniNS_HS,
-                                    TH2D &Template_AniEW_HS,
-                                    TH2D &Template_AniFB_HS,
-                                    TH1D &Template_hwI,
-                                    TH1D &Template_hwNS,
-                                    TH1D &Template_hwEW,
-                                    TH1D &Template_hwFB,
-                                    TF2 &dI,
-                                    TF2 &dNS,
-                                    TF2 &dEW,
-                                    TF2 &dFB,
-                                    TTree &fiTree,
-                                    fitResult &tmp_fit,
+                                    std::string output_log,
+                                    std::string output_root,
+                                    time_t time_stamp,
+                                    UInt_t tmp_seed,
                                     Double_t NS_anisotropy,
                                     Double_t EW_anisotropy,
                                     Double_t FB_anisotropy,
-                                    TCanvas &LS_Templates_Canvas,
-                                    TCanvas &HS_Templates_Canvas,
-                                    UInt_t tmp_seed
+                                    std::string template_out_path,
+                                    std::string DAMPE_template_out_path,
+                                    Bool_t write_tmp_histos,
+                                    ULong64_t data_LS_events,
+                                    ULong64_t data_HS_events
                                  );
 
 extern void DAMPE_singleTry_fit(
                                     std::ofstream &output_log_file,
-                                    std::string &data_out_path,
-                                    std::string &pools_out_path,
-                                    TH2D &DAMPE_Template_Iso_LS,
-                                    TH2D &DAMPE_Template_AniNS_LS,
-                                    TH2D &DAMPE_Template_AniEW_LS,
-                                    TH2D &DAMPE_Template_AniFB_LS,
-                                    TH2D &DAMPE_Template_Iso_HS,
-                                    TH2D &DAMPE_Template_AniNS_HS,
-                                    TH2D &DAMPE_Template_AniEW_HS,
-                                    TH2D &DAMPE_Template_AniFB_HS,
+                                    std::string output_log,
+                                    std::string output_root,
+                                    time_t time_stamp,
+                                    UInt_t tmp_seed,
                                     Double_t NS_anisotropy,
                                     Double_t EW_anisotropy,
                                     Double_t FB_anisotropy,
-                                    fitResult &tmp_fit,
-                                    UInt_t tmp_seed,
-                                    TTree &fiTree
+                                    std::string template_out_path,
+                                    std::string DAMPE_template_out_path,
+                                    ULong64_t data_LS_events,
+                                    ULong64_t data_HS_events,
+                                    Bool_t write_tmp_histos
                                 );
+
+extern void generate_DAMPE_LS_data(
+                                       Double_t NS_anisotropy,
+                                       Double_t EW_anisotropy,
+                                       Double_t FB_anisotropy,
+                                       TH2D* DAMPE_Data_Iso_LS,
+                                       TH2D* DAMPE_Data_AniNS_LS,
+                                       TH2D* DAMPE_Data_AniEW_LS,
+                                       TH2D* DAMPE_Data_AniFB_LS,
+                                       TH2D* DAMPE_MixedData_NS_EW_LS,
+                                       TH2D* DAMPE_MixedData_NS_FB_LS,
+                                       TH2D* DAMPE_MixedData_EW_FB_LS,
+                                       TH2D* DAMPE_FullMixedData_LS,
+                                       TH2D &DAMPE_Template_Iso_LS,
+                                       TH2D &DAMPE_Template_AniNS_LS,
+                                       TH2D &DAMPE_Template_AniEW_LS,
+                                       TH2D &DAMPE_Template_AniFB_LS,
+                                       std::ofstream &output_log_file,
+                                       UInt_t tmp_seed,
+                                       ULong64_t data_LS_events
+                                   );
+
+extern void generate_DAMPE_HS_data(
+                                       Double_t NS_anisotropy,
+                                       Double_t EW_anisotropy,
+                                       Double_t FB_anisotropy,
+                                       TH2D* DAMPE_Data_Iso_HS,
+                                       TH2D* DAMPE_Data_AniNS_HS,
+                                       TH2D* DAMPE_Data_AniEW_HS,
+                                       TH2D* DAMPE_Data_AniFB_HS,
+                                       TH2D* DAMPE_MixedData_NS_EW_HS,
+                                       TH2D* DAMPE_MixedData_NS_FB_HS,
+                                       TH2D* DAMPE_MixedData_EW_FB_HS,
+                                       TH2D* DAMPE_FullMixedData_HS,
+                                       TH2D &DAMPE_Template_Iso_HS,
+                                       TH2D &DAMPE_Template_AniNS_HS,
+                                       TH2D &DAMPE_Template_AniEW_HS,
+                                       TH2D &DAMPE_Template_AniFB_HS,
+                                       std::ofstream &output_log_file,
+                                       UInt_t tmp_seed,
+                                       ULong64_t data_HS_events
+                                   );
 
 extern void DAMPE_relative_singleTry_fit(
                                             std::ofstream &output_log_file,
-                                            std::string &data_out_path,
-                                            std::string &pools_out_path,
-                                            TH2D &Template_Iso_LS,
-                                            TH2D &Template_AniNS_LS,
-                                            TH2D &Template_AniEW_LS,
-                                            TH2D &Template_AniFB_LS,
-                                            TH2D &Template_Iso_HS,
-                                            TH2D &Template_AniNS_HS,
-                                            TH2D &Template_AniEW_HS,
-                                            TH2D &Template_AniFB_HS,
-                                            TH2D &DAMPE_ReferenceMap,
+                                            std::string output_log,
+                                            std::string output_root,
+                                            time_t time_stamp,
+                                            UInt_t tmp_seed,
                                             Double_t NS_anisotropy,
                                             Double_t EW_anisotropy,
                                             Double_t FB_anisotropy,
-                                            fitResult &tmp_fit,
-                                            UInt_t tmp_seed,
-                                            TTree &fiTree
+                                            std::string template_out_path,
+                                            std::string DAMPE_template_out_path,
+                                            TH2D &DAMPE_ReferenceMap_LS,
+                                            TH2D &DAMPE_ReferenceMap_HS,
+                                            ULong64_t data_LS_events,
+                                            ULong64_t data_HS_events,
+                                            Bool_t write_tmp_histos
                                          );
 
 ////////////////// RooFit TemplateFit functions //////////////////
@@ -572,5 +489,29 @@ void fcnchisq(int& npar, double* deriv, double& f, double par[], int flag);
 void fcnlike(int& npar, double* deriv, double& f, double par[], int flag);
 double func(int npar, double par[], double _dochisqfit);
 
-TH1* TemplateFitRF(TH1* dat, int ncomp, TH1* temp[], double _res[], double _reserr[], double initialguess[], bool fixtoinitialguess[], bool quiet, bool resettemplates, bool kClamping);
-TH1* TemplateFitBH(TH1* dat, int ncomp, TH1* temp[], double _res[], double _reserr[], double initialguess[], bool quiet, bool resettemplates, bool kClamping, bool kChiSq,std::ofstream &log_file,fitResult &tmp_fit,Int_t fit_element,bool HS);
+TH1* TemplateFitRF(
+                        TH1* dat,
+                        int ncomp,
+                        TH1* temp[],
+                        double _res[],
+                        double _reserr[],
+                        double initialguess[],
+                        bool fixtoinitialguess[],
+                        bool quiet,
+                        bool resettemplates,
+                        bool kClamping
+                   );
+
+TH1* TemplateFitBH(
+                       TH1* dat,
+                       int ncomp,
+                       TH1* temp[],
+                       double _res[],
+                       double _reserr[],
+                       double initialguess[],
+                       bool quiet,
+                       bool resettemplates,
+                       bool kClamping,
+                       bool kChiSq,
+                       std::ofstream &log_file
+                   );

@@ -1,4 +1,4 @@
-///// Head file ///////
+///// Header file ///////
 
 ///// C++ libraries
 

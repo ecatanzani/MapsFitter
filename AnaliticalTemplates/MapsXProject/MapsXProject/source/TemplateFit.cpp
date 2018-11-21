@@ -8,6 +8,8 @@ using namespace RooFit;
 static TH1* __dat__;
 static TH1** __temp__;
 static int NDATA;
+static int chi2_filter_bc = 5;
+static bool relative_fit = false;
 
 //////////////////////////////////
 
@@ -45,9 +47,20 @@ double func(int npar, double par[], double _dochisqfit){
             //double sigmasq = yobs;//MLS
             double sigmasq = TMath::Power(__dat__->GetBinError(bb),2);
             //     double sigmasq = yexp;//LS (this would also imply to 'throw away' not-empty bins, if the model is 0...)
-            if (sigmasq>0) {
-                ChiSq += pow((yobs-yexp), 2.0)/sigmasq;
-                NDATA++;
+            if(relative_fit)
+            {
+                if(sigmasq!=0)
+                {
+                    ChiSq += pow((yobs-yexp), 2.0)/sigmasq;
+                    NDATA++;
+                }
+            }
+            else
+            {
+                if(yobs >= chi2_filter_bc && sigmasq!=0) {
+                    ChiSq += pow((yobs-yexp), 2.0)/sigmasq;
+                    NDATA++;
+                }
             }
         }
         else {//LIKELIHOOD
@@ -322,20 +335,18 @@ TH1* TemplateFitRF(TH1* dat, int ncomp, TH1* temp[], double _res[], double _rese
 }
 
 TH1* TemplateFitBH(
-                    TH1* dat,
-                    int ncomp,
-                    TH1* temp[],
-                    double _res[],
-                    double _reserr[],
-                    double initialguess[],
-                    bool quiet,
-                    bool resettemplates,
-                    bool kClamping,
-                    bool kChiSq,
-                    std::ofstream &log_file,
-                    fitResult &tmp_fit,
-                    Int_t fit_element,
-                    bool HS)
+                       TH1* dat,
+                       int ncomp,
+                       TH1* temp[],
+                       double _res[],
+                       double _reserr[],
+                       double initialguess[],
+                       bool quiet,
+                       bool resettemplates,
+                       bool kClamping,
+                       bool kChiSq,
+                       std::ofstream &log_file
+                   )
 
 {
     
@@ -458,35 +469,35 @@ TH1* TemplateFitBH(
             log_file << "Parameter " << parName[icomp].c_str() << " value " << _res[icomp] << " error " << _reserr[icomp]<<std::endl;
         }
     }
-
+    
     /*
-    for (int icomp=0; icomp<npar; icomp++)
-    {
-        minuit.GetParameter(icomp, _res[icomp], _reserr[icomp]);
-        if (!quiet)
-        {
-            if(icomp==0)
-            {
-                std::cout << "Parameter " << parName[icomp].c_str() << " value " << _res[icomp] << " error " << _reserr[icomp]<<std::endl;
-                log_file << "Parameter " << parName[icomp].c_str() << " value " << _res[icomp] << " error " << _reserr[icomp]<<std::endl;
-            }
-            else if(icomp==1)
-            {
-                std::cout << "Parameter " << parName[icomp].c_str() << " value " << _res[icomp]*TMath::Sqrt((3/(4*TMath::Pi()))) << " error " << _reserr[icomp]*TMath::Sqrt((3/(4*TMath::Pi()))) <<std::endl;
-                log_file << "Parameter " << parName[icomp].c_str() << " value " << _res[icomp]*TMath::Sqrt((3/(4*TMath::Pi()))) << " error " << _reserr[icomp]*TMath::Sqrt((3/(4*TMath::Pi()))) <<std::endl;
-                //std::cout << "Parameter " << parName[icomp].c_str() << " value " << _res[icomp]*TMath::Sqrt((3/(4*TMath::Pi()))) << " error " << _reserr[icomp] << std::endl;
-                //log_file << "Parameter " << parName[icomp].c_str() << " value " << _res[icomp]*TMath::Sqrt((3/(4*TMath::Pi()))) << " error " << _reserr[icomp] << std::endl;
-            }
-            else
-            {
-                std::cout << "Parameter " << parName[icomp].c_str() << " value " << _res[icomp]*TMath::Sqrt((6/(4*TMath::Pi()))) << " error " << _reserr[icomp]*TMath::Sqrt((6/(4*TMath::Pi()))) <<std::endl;
-                log_file << "Parameter " << parName[icomp].c_str() << " value " << _res[icomp]*TMath::Sqrt((6/(4*TMath::Pi()))) << " error " << _reserr[icomp]*TMath::Sqrt((6/(4*TMath::Pi()))) <<std::endl;
-                //std::cout << "Parameter " << parName[icomp].c_str() << " value " << _res[icomp]*TMath::Sqrt((6/(4*TMath::Pi()))) << " error " << _reserr[icomp] << std::endl;
-                //log_file << "Parameter " << parName[icomp].c_str() << " value " << _res[icomp]*TMath::Sqrt((6/(4*TMath::Pi()))) << " error " << _reserr[icomp]  << std::endl;
-            }
-        }
-    }
-    */
+     for (int icomp=0; icomp<npar; icomp++)
+     {
+     minuit.GetParameter(icomp, _res[icomp], _reserr[icomp]);
+     if (!quiet)
+     {
+     if(icomp==0)
+     {
+     std::cout << "Parameter " << parName[icomp].c_str() << " value " << _res[icomp] << " error " << _reserr[icomp]<<std::endl;
+     log_file << "Parameter " << parName[icomp].c_str() << " value " << _res[icomp] << " error " << _reserr[icomp]<<std::endl;
+     }
+     else if(icomp==1)
+     {
+     std::cout << "Parameter " << parName[icomp].c_str() << " value " << _res[icomp]*TMath::Sqrt((3/(4*TMath::Pi()))) << " error " << _reserr[icomp]*TMath::Sqrt((3/(4*TMath::Pi()))) <<std::endl;
+     log_file << "Parameter " << parName[icomp].c_str() << " value " << _res[icomp]*TMath::Sqrt((3/(4*TMath::Pi()))) << " error " << _reserr[icomp]*TMath::Sqrt((3/(4*TMath::Pi()))) <<std::endl;
+     //std::cout << "Parameter " << parName[icomp].c_str() << " value " << _res[icomp]*TMath::Sqrt((3/(4*TMath::Pi()))) << " error " << _reserr[icomp] << std::endl;
+     //log_file << "Parameter " << parName[icomp].c_str() << " value " << _res[icomp]*TMath::Sqrt((3/(4*TMath::Pi()))) << " error " << _reserr[icomp] << std::endl;
+     }
+     else
+     {
+     std::cout << "Parameter " << parName[icomp].c_str() << " value " << _res[icomp]*TMath::Sqrt((6/(4*TMath::Pi()))) << " error " << _reserr[icomp]*TMath::Sqrt((6/(4*TMath::Pi()))) <<std::endl;
+     log_file << "Parameter " << parName[icomp].c_str() << " value " << _res[icomp]*TMath::Sqrt((6/(4*TMath::Pi()))) << " error " << _reserr[icomp]*TMath::Sqrt((6/(4*TMath::Pi()))) <<std::endl;
+     //std::cout << "Parameter " << parName[icomp].c_str() << " value " << _res[icomp]*TMath::Sqrt((6/(4*TMath::Pi()))) << " error " << _reserr[icomp] << std::endl;
+     //log_file << "Parameter " << parName[icomp].c_str() << " value " << _res[icomp]*TMath::Sqrt((6/(4*TMath::Pi()))) << " error " << _reserr[icomp]  << std::endl;
+     }
+     }
+     }
+     */
     
     double chisq = func(npar, _res, true);
     int freepars = minuit.GetNumFreePars();
@@ -509,154 +520,9 @@ TH1* TemplateFitBH(
     //  printf("</TemplateFitBH>\n");
     
     
-    ///////////////// Filling class
-    
-    
-    if(!HS)
-    {
-        
-        double covMatrix_LS[4][4];
-        minuit.mnemat(&covMatrix_LS[0][0],4);
-        ani_level = compute_ani_level(covMatrix_LS,_res,_reserr,log_file);
-        
-        for(Int_t par_idx = 0; par_idx < 4; ++par_idx)
-        {
-            tmp_fit.fit_par_LS[fit_element][par_idx] = _res[par_idx];
-            tmp_fit.fit_err_LS[fit_element][par_idx] = _reserr[par_idx];
-        }
-        
-        tmp_fit.chi2_LS[fit_element] = chisq;
-        tmp_fit.ndf_LS[fit_element] = ndof;
-        tmp_fit.delta_LS[fit_element] = ani_level;
-        tmp_fit.sum_par_LS[fit_element] = _res[0] + _res[1] + _res[2] + _res[3];
-        
-        switch(fit_element)
-        {
-            case 0:
-                for(Int_t Ridx = 0; Ridx < 4; ++Ridx)
-                    for(Int_t Cidx = 0; Cidx < 4; ++Cidx)
-                        tmp_fit.CMatrix_Iso_LS[Ridx][Cidx] = covMatrix_LS[Ridx][Cidx];
-                break;
-            
-            case 1:
-                for(Int_t Ridx = 0; Ridx < 4; ++Ridx)
-                    for(Int_t Cidx = 0; Cidx < 4; ++Cidx)
-                        tmp_fit.CMatrix_NS_LS[Ridx][Cidx] = covMatrix_LS[Ridx][Cidx];
-                break;
-                
-            case 2:
-                for(Int_t Ridx = 0; Ridx < 4; ++Ridx)
-                    for(Int_t Cidx = 0; Cidx < 4; ++Cidx)
-                        tmp_fit.CMatrix_EW_LS[Ridx][Cidx] = covMatrix_LS[Ridx][Cidx];
-                break;
-            
-            case 3:
-                for(Int_t Ridx = 0; Ridx < 4; ++Ridx)
-                    for(Int_t Cidx = 0; Cidx < 4; ++Cidx)
-                        tmp_fit.CMatrix_FB_LS[Ridx][Cidx] = covMatrix_LS[Ridx][Cidx];
-                break;
-                
-            case 4:
-                for(Int_t Ridx = 0; Ridx < 4; ++Ridx)
-                    for(Int_t Cidx = 0; Cidx < 4; ++Cidx)
-                        tmp_fit.CMatrix_NS_EW_LS[Ridx][Cidx] = covMatrix_LS[Ridx][Cidx];
-                break;
-                
-            case 5:
-                for(Int_t Ridx = 0; Ridx < 4; ++Ridx)
-                    for(Int_t Cidx = 0; Cidx < 4; ++Cidx)
-                        tmp_fit.CMatrix_NS_FB_LS[Ridx][Cidx] = covMatrix_LS[Ridx][Cidx];
-                break;
-                
-            case 6:
-                for(Int_t Ridx = 0; Ridx < 4; ++Ridx)
-                    for(Int_t Cidx = 0; Cidx < 4; ++Cidx)
-                        tmp_fit.CMatrix_EW_FB_LS[Ridx][Cidx] = covMatrix_LS[Ridx][Cidx];
-                break;
-                
-            case 7:
-                for(Int_t Ridx = 0; Ridx < 4; ++Ridx)
-                    for(Int_t Cidx = 0; Cidx < 4; ++Cidx)
-                        tmp_fit.CMatrix_Full_LS[Ridx][Cidx] = covMatrix_LS[Ridx][Cidx];
-                break;
-                
-        }
-    }
-    else
-    {
-        
-        Double_t covMatrix_HS[4][4];
-        minuit.mnemat(&covMatrix_HS[0][0],4);
-        ani_level = compute_ani_level(covMatrix_HS,_res,_reserr,log_file);
-        
-        for(Int_t par_idx = 0; par_idx < 4; ++par_idx)
-        {
-            tmp_fit.fit_par_HS[fit_element][par_idx] = _res[par_idx];
-            tmp_fit.fit_err_HS[fit_element][par_idx] = _reserr[par_idx];
-        }
-        
-        tmp_fit.chi2_HS[fit_element] = chisq;
-        tmp_fit.ndf_HS[fit_element] = ndof;
-        tmp_fit.delta_HS[fit_element] = ani_level;
-        tmp_fit.sum_par_HS[fit_element] = _res[0] + _res[1] + _res[2] + _res[3];
-        
-        
-     
-        switch(fit_element)
-        {
-            case 0:
-                for(Int_t Ridx = 0; Ridx < 4; ++Ridx)
-                    for(Int_t Cidx = 0; Cidx < 4; ++Cidx)
-                        tmp_fit.CMatrix_Iso_LS[Ridx][Cidx] = covMatrix_HS[Ridx][Cidx];
-                break;
-                
-            case 1:
-                for(Int_t Ridx = 0; Ridx < 4; ++Ridx)
-                    for(Int_t Cidx = 0; Cidx < 4; ++Cidx)
-                        tmp_fit.CMatrix_NS_LS[Ridx][Cidx] = covMatrix_HS[Ridx][Cidx];
-                break;
-                
-            case 2:
-                for(Int_t Ridx = 0; Ridx < 4; ++Ridx)
-                    for(Int_t Cidx = 0; Cidx < 4; ++Cidx)
-                        tmp_fit.CMatrix_EW_LS[Ridx][Cidx] = covMatrix_HS[Ridx][Cidx];
-                break;
-                
-            case 3:
-                for(Int_t Ridx = 0; Ridx < 4; ++Ridx)
-                    for(Int_t Cidx = 0; Cidx < 4; ++Cidx)
-                        tmp_fit.CMatrix_FB_LS[Ridx][Cidx] = covMatrix_HS[Ridx][Cidx];
-                break;
-                
-            case 4:
-                for(Int_t Ridx = 0; Ridx < 4; ++Ridx)
-                    for(Int_t Cidx = 0; Cidx < 4; ++Cidx)
-                        tmp_fit.CMatrix_NS_EW_LS[Ridx][Cidx] = covMatrix_HS[Ridx][Cidx];
-                break;
-                
-            case 5:
-                for(Int_t Ridx = 0; Ridx < 4; ++Ridx)
-                    for(Int_t Cidx = 0; Cidx < 4; ++Cidx)
-                        tmp_fit.CMatrix_NS_FB_LS[Ridx][Cidx] = covMatrix_HS[Ridx][Cidx];
-                break;
-                
-            case 6:
-                for(Int_t Ridx = 0; Ridx < 4; ++Ridx)
-                    for(Int_t Cidx = 0; Cidx < 4; ++Cidx)
-                        tmp_fit.CMatrix_EW_FB_LS[Ridx][Cidx] = covMatrix_HS[Ridx][Cidx];
-                break;
-                
-            case 7:
-                for(Int_t Ridx = 0; Ridx < 4; ++Ridx)
-                    for(Int_t Cidx = 0; Cidx < 4; ++Cidx)
-                        tmp_fit.CMatrix_Full_LS[Ridx][Cidx] = covMatrix_HS[Ridx][Cidx];
-                break;
-                
-        }
-    }
-    
-
-    //////////////////////////////////////
+    double covMatrix_LS[4][4];
+    minuit.mnemat(&covMatrix_LS[0][0],4);
+    ani_level = compute_ani_level(covMatrix_LS,_res,_reserr,log_file);
     
     return result;
 }
