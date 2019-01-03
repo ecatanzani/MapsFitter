@@ -334,6 +334,21 @@ extern void interface_DAMPE_simulation(
                                            ULong64_t data_HS_events
                                        );
 
+extern void interface_DAMPE_relative_simulation(
+                                                    std::ofstream &output_log_file,
+                                                    std::string output_log,
+                                                    std::string output_root,
+                                                    time_t time_stamp,
+                                                    Double_t NS_anisotropy,
+                                                    Double_t EW_anisotropy,
+                                                    Double_t FB_anisotropy,
+                                                    UInt_t tmp_seed,
+                                                    ULong64_t data_LS_events,
+                                                    ULong64_t data_HS_events,
+                                                    TH2D &DAMPE_ReferenceMap_LS,
+                                                    TH2D &DAMPE_ReferenceMap_HS
+                                                );
+
 extern Double_t get_TF2_max(TF2 &function,Double_t theta);
 extern Double_t get_XY_TF2_max(TF2 &function,Double_t theta,Double_t phi);
 

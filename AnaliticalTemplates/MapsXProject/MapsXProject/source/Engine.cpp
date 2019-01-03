@@ -126,6 +126,8 @@ void generate_templates(
     
 }
 
+/*
+
 void read_from_file(std::string template_path,std::string data_path,std::ofstream &output_log_file) {
     
     std::string pools_out_path = output_path_creator(4);
@@ -433,6 +435,7 @@ void read_from_file(std::string template_path,std::string data_path,std::ofstrea
     pool_file.Close();
     
 }
+*/
 
 void generate_and_fit(
                         ULong64_t data_LS_events,

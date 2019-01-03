@@ -188,6 +188,14 @@ void draw_maps(const std::string resultPath,bool HS=false,bool templates=false,b
     
         inputFile.Close();
     
+        if(invert_Xaxis)
+        {
+            ReverseXAxis(*Template_Iso);
+            ReverseXAxis(*Template_AniNS);
+            ReverseXAxis(*Template_AniEW);
+            ReverseXAxis(*Template_AniFB);
+        }
+        
         draw_single_map(Template_Iso,logz);
         draw_single_map(Template_AniNS,logz);
         draw_single_map(Template_AniEW,logz);
@@ -349,7 +357,7 @@ void draw_grid(TVirtualPad* pad,Double_t canv_x_size,Double_t canv_y_size,Bool_t
     }
 }
 
-void ReverseXAxis (TH2D &histo)
+void ReverseXAxis(TH2D &histo)
 {
     TH2D *tmpHisto = (TH2D*)histo.Clone("tmpHisto");
     tmpHisto->Reset();
