@@ -1,24 +1,36 @@
 
 #include "MyHead.h"
 
-void generate_data(
-                        std::ofstream &output_log_file,
-                        std::string output_log,
-                        std::string output_root,
-                        std::string DAMPE_Iso_Map,
-                        time_t time_stamp,
-                        std::vector<Double_t> &NS_anisotropy,
-                        std::vector<Double_t> &EW_anisotropy,
-                        std::vector<Double_t> &FB_anisotropy,
-                        UInt_t tmp_seed,
-                        ULong64_t data_LS_events,
-                        ULong64_t data_HS_events,
-                        UInt_t ani_values,
-                        Bool_t all_sky_simulation,
-                        Bool_t DAMPE_simulation,
-                        Bool_t DAMPE_relative_simulation
-                   )
+
+void generate_data_interface(
+                                std::ofstream &output_log_file,
+                                std::string output_log,
+                                std::string output_root,
+                                std::string DAMPE_Iso_Map,
+                                std::string seeds_path,
+                                time_t time_stamp,
+                                std::vector<Double_t> &NS_anisotropy,
+                                std::vector<Double_t> &EW_anisotropy,
+                                std::vector<Double_t> &FB_anisotropy,
+                                ULong64_t data_LS_events,
+                                ULong64_t data_HS_events,
+                                UInt_t ani_values,
+                                Bool_t all_sky_simulation,
+                                Bool_t DAMPE_simulation,
+                                Bool_t DAMPE_relative_simulation
+                             )
 {
+    
+    //////////// Seed stuff
+    
+    std::string tmp_seed_str;
+    UInt_t tmp_seed = 0;
+    std::ifstream inSeed(seeds_path);
+    if(!inSeed.is_open()) {
+        std::cerr << "\n\nCannot open input seeds file! Program finished !" << std::endl;
+        exit(100);
+    }
+    
     
     //////////// Compute scaled reference maps
     
@@ -33,9 +45,21 @@ void generate_data(
                        );
     
     
+    for(Int_t idx_ani = 0; idx_ani < ani_values; ++idx_ani)
+    {
+        
+        std::cout << "\n\nNS Anisotropy: " << NS_anisotropy[idx_ani] << "\n";
+        std::cout << "EW Anisotropy: " << EW_anisotropy[idx_ani] << "\n";
+        std::cout << "FB Anisotropy: " << FB_anisotropy[idx_ani] << "\n\n";
+        
+        output_log_file << "\n\nNS Anisotropy: " << NS_anisotropy[idx_ani] << "\n";
+        output_log_file << "EW Anisotropy: " << EW_anisotropy[idx_ani] << "\n";
+        output_log_file << "FB Anisotropy: " << FB_anisotropy[idx_ani] << "\n\n";
+        
+        inSeed >> tmp_seed_str;
+        tmp_seed = (UInt_t)std::stoul(tmp_seed_str,nullptr,10);
     
-    if(all_sky_simulation)
-        for(Int_t idx_ani = 0; idx_ani < ani_values; ++idx_ani)
+        if(all_sky_simulation)
             interface_allSky_simulation(
                                             output_log_file,
                                             output_log,
@@ -51,8 +75,7 @@ void generate_data(
  
         
     
-    if(DAMPE_simulation)
-        for(Int_t idx_ani = 0; idx_ani < ani_values; ++idx_ani)
+        if(DAMPE_simulation)
             interface_DAMPE_simulation(
                                             output_log_file,
                                             output_log,
@@ -67,8 +90,7 @@ void generate_data(
                                         );
         
     
-    if(DAMPE_relative_simulation)
-        for(Int_t idx_ani = 0; idx_ani < ani_values; ++idx_ani)
+        if(DAMPE_relative_simulation)
             interface_DAMPE_relative_simulation(
                                                     output_log_file,
                                                     output_log,
@@ -83,8 +105,10 @@ void generate_data(
                                                     DAMPE_ReferenceMap_LS,
                                                     DAMPE_ReferenceMap_HS
                                                 );
-    
+    }
+        
 }
+
 
 void generate_templates(
                             std::ofstream &output_log_file,

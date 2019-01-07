@@ -131,7 +131,23 @@ extern void generate_templates(
                                    time_t time_stamp
                                );
 
-extern void generate_data(std::ofstream &log_file,std::string &data_path);
+extern void generate_data_interface(
+                                        std::ofstream &output_log_file,
+                                        std::string output_log,
+                                        std::string output_root,
+                                        std::string DAMPE_Iso_Map,
+                                        std::string seeds_path,
+                                        time_t time_stamp,
+                                        std::vector<Double_t> &NS_anisotropy,
+                                        std::vector<Double_t> &EW_anisotropy,
+                                        std::vector<Double_t> &FB_anisotropy,
+                                        ULong64_t data_LS_events,
+                                        ULong64_t data_HS_events,
+                                        UInt_t ani_values,
+                                        Bool_t all_sky_simulation,
+                                        Bool_t DAMPE_simulation,
+                                        Bool_t DAMPE_relative_simulation
+                                    );
 
 extern void read_DAMPE_FullIso(
                                 TH2D &DAMPE_ReferenceMap_LS,
