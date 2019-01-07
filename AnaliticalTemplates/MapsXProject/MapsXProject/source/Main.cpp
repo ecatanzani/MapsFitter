@@ -66,7 +66,23 @@ int main(int argc,char *argv[]) {
             {
                 sp_vsr << argv[1];
                 sp_vsr >> template_path;
-                //generate_data(output_log_file,data_path);
+                generate_data_interface(
+                                            output_log_file,
+                                            output_log,
+                                            output_root,
+                                            DAMPE_Iso_Map,
+                                            seeds_path,
+                                            time_stamp,
+                                            NS_anisotropy,
+                                            EW_anisotropy,
+                                            FB_anisotropy,
+                                            data_LS_events,
+                                            data_HS_events,
+                                            ani_values,
+                                            all_sky_simulation,
+                                            DAMPE_simulation,
+                                            DAMPE_relative_simulation
+                                        );
             }
             else if(tmp_path.find("data")!=std::string::npos)
             {

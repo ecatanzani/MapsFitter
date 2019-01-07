@@ -1,7 +1,6 @@
 
 #include "MyHead.h"
 
-
 void generate_data_interface(
                                 std::ofstream &output_log_file,
                                 std::string output_log,
@@ -106,7 +105,7 @@ void generate_data_interface(
                                                     DAMPE_ReferenceMap_HS
                                                 );
     }
-        
+    
 }
 
 
