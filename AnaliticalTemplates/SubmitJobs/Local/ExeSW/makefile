@@ -1,4 +1,3 @@
-#Inputn
 MKDIR_P       ?=mkdir -p
 COMPILER      ?=g++
 TESTS         ?=true
@@ -12,40 +11,18 @@ endif
 ifeq ($(HAVE_TERM),dumb)
 	HAVE_TERM = none
 endif
-#program name
-
-CNAF_BOOST_PATH = /home/DAMPE/ecatanzani/bin/boost_1_67_0
-
-S_DIR  = $(TOP)/source/
-S_INC = $(TOP)/include/
-DEBUG_DIR = Debug/obj
-RELEASE_DIR = Release/obj
-DEBUG_PROG = Debug/JMapsFit
-RELEASE_PROG = Release/JMapsFit
 
 #dependencie
 DIPS_INCLUDE = $(shell root-config --cflags)
 DIPS_LIBS = $(shell root-config --ldflags) $(shell root-config --libs) -lMinuit -lRooFit -lRooFitCore
 
+S_DIR  = $(TOP)/source/
 
-LDLIBS = -lboost_filesystem -lboost_system
-
-ifeq ($(shell uname -s),Linux) # LINUX
-	ifneq ("$(wildcard $(CNAF_BOOST_PATH))","")
-		DIPS_INCLUDE += -I $(CNAF_BOOST_PATH)
-		DIPS_LIBS += -L $(CNAF_BOOST_PATH)/stage/lib/
-	else
-		DIPS_INCLUDE += -I $(HOME_SERVER_BOOST_PATH)
-		DIPS_LIBS += -L $(HOME_SERVER_BOOST_PATH)/stage/lib/
-	endif
-endif
-
-ifeq ($(shell uname -s),Darwin) # macOS 
-    DIPS_INCLUDE += -I /Users/enrico/boost_1_67_0
-    DIPS_LIBS += -L /Users/enrico/boost_1_67_0/stage/lib/
-endif
-
-
+S_INC  = $(TOP)/include/
+DEBUG_DIR    = Debug/obj
+RELEASE_DIR  = Release/obj
+DEBUG_PROG   = Debug/JMapsFit
+RELEASE_PROG = Release/JMapsFit
 
 # Don't compile specific files
 FILTER :=
@@ -125,15 +102,15 @@ COLOR_MAGENTA = 5
 COLOR_CYAN = 6
 COLOR_WHITE = 7
 
-all: directories show_debug_flags debug release
+all: directories show_debug_flags debug release clean
 
 directories: debug_make_dirs release_make_dirs
 
 rebuild: clean directories debug release
 
-rebuild_debug: clean_debug debug
+rebuild_debug: clean_all_debug debug
 
-rebuild_release: clean_release release
+rebuild_release: clean_all_release release
 
 debug: directories show_debug_flags $(SOURCE_DEBUG_OBJS) $(TEST_SOURCE_DEBUG_OBJS)
 	$(COMPILER) $(C_FLAGS) $(CC_FLAGS) $(SOURCE_DEBUG_OBJS) $(LDFLAGS) -o $(O_DEBUG_PROG)
@@ -175,14 +152,23 @@ $(SOURCE_RELEASE_OBJS):
 
 # Clean
 clean: clean_debug clean_release
+clean_all: clean_all_debug clean_all_release
 
 clean_debug:
+	$(call colorecho,$(COLOR_MAGENTA),"[ Delete debug obj files ]")
+	@rm -f -R $(O_DEBUG_DIR)
+
+clean_release:
+	$(call colorecho,$(COLOR_MAGENTA),"[ Delete release obj files ]")
+	@rm -f -R $(O_RELEASE_DIR)
+
+clean_all_debug:
 	$(call colorecho,$(COLOR_MAGENTA),"[ Delete debug obj files ]")
 	@rm -f -R $(O_DEBUG_DIR)
 	$(call colorecho,$(COLOR_MAGENTA),"[ Delete debug executable files ]")
 	@rm -f -R $(O_DEBUG_PROG)
 
-clean_release:
+clean_all_release:
 	$(call colorecho,$(COLOR_MAGENTA),"[ Delete release obj files ]")
 	@rm -f -R $(O_RELEASE_DIR)
 	$(call colorecho,$(COLOR_MAGENTA),"[ Delete release executable files ]")
