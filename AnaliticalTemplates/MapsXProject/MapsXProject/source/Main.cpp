@@ -100,7 +100,18 @@ int main(int argc,char *argv[]) {
             }
         }
         
-        //read_from_file(template_path,data_path,output_log_file);
+        for(Int_t idx_ani = 0; idx_ani < ani_values; ++idx_ani)
+            read_from_file(
+                               template_path,
+                               data_path,
+                               output_log_file,
+                               output_log,
+                               output_root,
+                               time_stamp,
+                               NS_anisotropy[idx_ani],
+                               EW_anisotropy[idx_ani],
+                               FB_anisotropy[idx_ani]
+                           );
     
     }
     else

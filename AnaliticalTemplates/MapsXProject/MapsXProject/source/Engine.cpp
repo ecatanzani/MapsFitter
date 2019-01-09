@@ -149,11 +149,30 @@ void generate_templates(
     
 }
 
-/*
 
-void read_from_file(std::string template_path,std::string data_path,std::ofstream &output_log_file) {
+void read_from_file(
+                        std::string template_path,
+                        std::string data_path,
+                        std::ofstream &output_log_file,
+                        std::string output_log,
+                        std::string output_root,
+                        time_t time_stamp,
+                        Double_t NS_anisotropy,
+                        Double_t EW_anisotropy,
+                        Double_t FB_anisotropy
+                    )
+{
     
-    std::string pools_out_path = output_path_creator(4);
+    std::string pools_out_path = output_path_creator(
+                                                         output_log,
+                                                         output_root,
+                                                         3,
+                                                         time_stamp,
+                                                         NS_anisotropy,
+                                                         EW_anisotropy,
+                                                         FB_anisotropy,
+                                                         false
+                                                     );
     
     //////////// TemplateFit variables
     
@@ -228,7 +247,29 @@ void read_from_file(std::string template_path,std::string data_path,std::ofstrea
     
     /////////////////////////////////////////////////////////////////////////////////////////
     
-    load_1D_histos(Templates_LS,DataHisto_I_LS,DataHisto_NS_LS,DataHisto_EW_LS,DataHisto_FB_LS,MixedDataHisto_NS_EW_LS,MixedDataHisto_NS_FB_LS,MixedDataHisto_EW_FB_LS,FullMixedDataHisto_LS,Templates_HS,DataHisto_I_HS,DataHisto_NS_HS,DataHisto_EW_HS,DataHisto_FB_HS,MixedDataHisto_NS_EW_HS,MixedDataHisto_NS_FB_HS,MixedDataHisto_EW_FB_HS,FullMixedDataHisto_HS,template_path,data_path,output_log_file);
+    load_1D_histos(
+                    Templates_LS,
+                    DataHisto_I_LS,
+                    DataHisto_NS_LS,
+                    DataHisto_EW_LS,
+                    DataHisto_FB_LS,
+                    MixedDataHisto_NS_EW_LS,
+                    MixedDataHisto_NS_FB_LS,
+                    MixedDataHisto_EW_FB_LS,
+                    FullMixedDataHisto_LS,
+                    Templates_HS,
+                    DataHisto_I_HS,
+                    DataHisto_NS_HS,
+                    DataHisto_EW_HS,
+                    DataHisto_FB_HS,
+                    MixedDataHisto_NS_EW_HS,
+                    MixedDataHisto_NS_FB_HS,
+                    MixedDataHisto_EW_FB_HS,
+                    FullMixedDataHisto_HS,
+                    template_path,
+                    data_path,
+                    output_log_file
+                   );
     
     /////////////////////////////////////////////////////////////////////////////////////////
         
@@ -257,52 +298,6 @@ void read_from_file(std::string template_path,std::string data_path,std::ofstrea
     MixedHisto_1D_EW_FB_HS = &MixedDataHisto_EW_FB_HS;
     FullMixedHisto_1D_HS = &FullMixedDataHisto_HS;
     
-    
-    ////////////////////////////////////
-    
-    TTree fiTree("fiTree","TemplateFit results TTree");
-    fitResult tmp_fit;
-    
-    fiTree.Branch("chi2_LS",tmp_fit.chi2_LS,"chi2_LS[8]/D");
-    fiTree.Branch("ndf_LS",tmp_fit.ndf_LS,"ndf_LS[8]/D");
-    fiTree.Branch("fit_par_LS",tmp_fit.fit_par_LS,"fit_par_LS[8][4]/D");
-    fiTree.Branch("fit_err_LS",tmp_fit.fit_err_LS,"fit_err_LS[8][4]/D");
-    fiTree.Branch("CMatrix_Iso_LS",tmp_fit.CMatrix_Iso_LS,"CMatrix_Iso_LS[4][4]/D");
-    fiTree.Branch("CMatrix_NS_LS",tmp_fit.CMatrix_NS_LS,"CMatrix_NS_LS[4][4]/D");
-    fiTree.Branch("CMatrix_EW_LS",tmp_fit.CMatrix_EW_LS,"CMatrix_EW_LS[4][4]/D");
-    fiTree.Branch("CMatrix_FB_LS",tmp_fit.CMatrix_FB_LS,"CMatrix_FB_LS[4][4]/D");
-    fiTree.Branch("CMatrix_NS_EW_LS",tmp_fit.CMatrix_NS_EW_LS,"CMatrix_NS_EW_LS[4][4]/D");
-    fiTree.Branch("CMatrix_NS_FB_LS",tmp_fit.CMatrix_NS_FB_LS,"CMatrix_NS_FB_LS[4][4]/D");
-    fiTree.Branch("CMatrix_EW_FB_LS",tmp_fit.CMatrix_EW_FB_LS,"CMatrix_EW_FB_LS[4][4]/D");
-    fiTree.Branch("CMatrix_Full_LS",tmp_fit.CMatrix_Full_LS,"CMatrix_Full_LS[4][4]/D");
-    
-    fiTree.Branch("theta_binHistos_LS",&tmp_fit.theta_binHistos_LS,"theta_binHistos_LS/I");
-    fiTree.Branch("phi_binhistos_LS",&tmp_fit.phi_binHistos_LS,"phi_binHistos_LS/I");
-    
-    fiTree.Branch("events_LS",&tmp_fit.events_LS,"events_LS/l");
-    
-    fiTree.Branch("chi2_HS",tmp_fit.chi2_HS,"chi2_HS[8]/D");
-    fiTree.Branch("ndf_HS",tmp_fit.ndf_HS,"ndf_HS[8]/D");
-    fiTree.Branch("fit_par_HS",tmp_fit.fit_par_HS,"fit_par_HS[8][4]/D");
-    fiTree.Branch("fit_err_HS",tmp_fit.fit_err_HS,"fit_err_HS[8][4]/D");
-    fiTree.Branch("CMatrix_Iso_HS",tmp_fit.CMatrix_Iso_HS,"CMatrix_Iso_HS[4][4]/D");
-    fiTree.Branch("CMatrix_NS_HS",tmp_fit.CMatrix_NS_HS,"CMatrix_NS_HS[4][4]/D");
-    fiTree.Branch("CMatrix_EW_HS",tmp_fit.CMatrix_EW_HS,"CMatrix_EW_HS[4][4]/D");
-    fiTree.Branch("CMatrix_FB_HS",tmp_fit.CMatrix_FB_HS,"CMatrix_FB_HS[4][4]/D");
-    fiTree.Branch("CMatrix_NS_EW_HS",tmp_fit.CMatrix_NS_EW_HS,"CMatrix_NS_EW_HS[4][4]/D");
-    fiTree.Branch("CMatrix_NS_FB_HS",tmp_fit.CMatrix_NS_FB_HS,"CMatrix_NS_FB_HS[4][4]/D");
-    fiTree.Branch("CMatrix_EW_FB_HS",tmp_fit.CMatrix_EW_FB_HS,"CMatrix_EW_FB_HS[4][4]/D");
-    fiTree.Branch("CMatrix_Full_HS",tmp_fit.CMatrix_Full_HS,"CMatrix_Full_HS[4][4]/D");
-    
-    fiTree.Branch("theta_binHistos_HS",&tmp_fit.theta_binHistos_HS,"theta_binHistos_HS/I");
-    fiTree.Branch("phi_binhistos_HS",&tmp_fit.phi_binHistos_HS,"phi_binHistos_HS/I");
-    
-    fiTree.Branch("events_HS",&tmp_fit.events_HS,"events_HS/l");
-    
-    
-    fiTree.Branch("inputAni",tmp_fit.inputAni,"inputAni[3]/D");
-    
-    
     /////////////////////////////////////////////////////////////////////////////// Fitting !!!
     
     std::cout << "\n\n //////////////////////////////////////// Low Statistics fits //////////////////////////////////////// \n\n";
@@ -311,49 +306,49 @@ void read_from_file(std::string template_path,std::string data_path,std::ofstrea
     std::cout << "\n\n -------------- > Isotropic Monopole \n\n";
     output_log_file << "\n\n -------------- > Isotropic Monopole \n\n";
     
-    TemplateFitBH(DataHisto_1D_I_LS,4,Templates_1D_LS,res,res_err,initialValues,false,false,false,true,output_log_file,tmp_fit,0,false);
+    TemplateFitBH(DataHisto_1D_I_LS,4,Templates_1D_LS,res,res_err,initialValues,false,false,false,true,output_log_file);
     getPull(DataHisto_1D_I_LS,Templates_1D_LS,res,hPull_Iso_LS);
     
     std::cout << "\n\n -------------- > Anisotropic Monopole (NS) \n\n";
     output_log_file << "\n\n -------------- > Anisotropic Monopole (NS) \n\n";
     
-    TemplateFitBH(DataHisto_1D_AniNS_LS,4,Templates_1D_LS,res,res_err,initialValues,false,false,false,true,output_log_file,tmp_fit,1,false);
+    TemplateFitBH(DataHisto_1D_AniNS_LS,4,Templates_1D_LS,res,res_err,initialValues,false,false,false,true,output_log_file);
     getPull(DataHisto_1D_AniNS_LS,Templates_1D_LS,res,hPull_AniNS_LS);
     
     std::cout << "\n\n -------------- > Anisotropic Monopole (EW) \n\n";
     output_log_file << "\n\n -------------- > Anisotropic Monopole (EW) \n\n";
     
-    TemplateFitBH(DataHisto_1D_AniEW_LS,4,Templates_1D_LS,res,res_err,initialValues,false,false,false,true,output_log_file,tmp_fit,2,false);
+    TemplateFitBH(DataHisto_1D_AniEW_LS,4,Templates_1D_LS,res,res_err,initialValues,false,false,false,true,output_log_file);
     getPull(DataHisto_1D_AniEW_LS,Templates_1D_LS,res,hPull_AniEW_LS);
     
     std::cout << "\n\n -------------- > Anisotropic Monopole (FB) \n\n";
     output_log_file << "\n\n -------------- > Anisotropic Monopole (FB) \n\n";
     
-    TemplateFitBH(DataHisto_1D_AniFB_LS,4,Templates_1D_LS,res,res_err,initialValues,false,false,false,true,output_log_file,tmp_fit,3,false);
+    TemplateFitBH(DataHisto_1D_AniFB_LS,4,Templates_1D_LS,res,res_err,initialValues,false,false,false,true,output_log_file);
     getPull(DataHisto_1D_AniFB_LS,Templates_1D_LS,res,hPull_AniFB_LS);
     
     std::cout << "\n\n -------------- > NS + EW linear combination \n\n";
     output_log_file << "\n\n -------------- > NS + EW linear combination \n\n";
     
-    TemplateFitBH(MixedHisto_1D_NS_EW_LS,4,Templates_1D_LS,res,res_err,initialValues,false,false,false,true,output_log_file,tmp_fit,4,false);
+    TemplateFitBH(MixedHisto_1D_NS_EW_LS,4,Templates_1D_LS,res,res_err,initialValues,false,false,false,true,output_log_file);
     getPull(MixedHisto_1D_NS_EW_LS,Templates_1D_LS,res,hPull_Mixed_NS_EW_LS);
     
     std::cout << "\n\n -------------- > NS + FB linear combination \n\n";
     output_log_file << "\n\n -------------- > NS + FB linear combination \n\n";
     
-    TemplateFitBH(MixedHisto_1D_NS_FB_LS,4,Templates_1D_LS,res,res_err,initialValues,false,false,false,true,output_log_file,tmp_fit,5,false);
+    TemplateFitBH(MixedHisto_1D_NS_FB_LS,4,Templates_1D_LS,res,res_err,initialValues,false,false,false,true,output_log_file);
     getPull(MixedHisto_1D_NS_FB_LS,Templates_1D_LS,res,hPull_Mixed_NS_FB_LS);
     
     std::cout << "\n\n -------------- > EW + FB linear combination \n\n";
     output_log_file << "\n\n -------------- > EW + FB linear combination \n\n";
     
-    TemplateFitBH(MixedHisto_1D_EW_FB_LS,4,Templates_1D_LS,res,res_err,initialValues,false,false,false,true,output_log_file,tmp_fit,6,false);
+    TemplateFitBH(MixedHisto_1D_EW_FB_LS,4,Templates_1D_LS,res,res_err,initialValues,false,false,false,true,output_log_file);
     getPull(MixedHisto_1D_EW_FB_LS,Templates_1D_LS,res,hPull_Mixed_EW_FB_LS);
     
     std::cout << "\n\n -------------- > FullMixed linear combination \n\n";
     output_log_file << "\n\n -------------- > FullMixed linear combination \n\n";
     
-    TemplateFitBH(FullMixedHisto_1D_LS,4,Templates_1D_LS,res,res_err,initialValues,false,false,false,true,output_log_file,tmp_fit,7,false);
+    TemplateFitBH(FullMixedHisto_1D_LS,4,Templates_1D_LS,res,res_err,initialValues,false,false,false,true,output_log_file);
     getPull(FullMixedHisto_1D_LS,Templates_1D_LS,res,hPull_FullMixed_LS);
     
     
@@ -363,49 +358,49 @@ void read_from_file(std::string template_path,std::string data_path,std::ofstrea
     std::cout << "\n\n -------------- > Isotropic Monopole \n\n";
     output_log_file << "\n\n -------------- > Isotropic Monopole \n\n";
     
-    TemplateFitBH(DataHisto_1D_I_HS,4,Templates_1D_HS,res,res_err,initialValues,false,false,false,true,output_log_file,tmp_fit,0,true);
+    TemplateFitBH(DataHisto_1D_I_HS,4,Templates_1D_HS,res,res_err,initialValues,false,false,false,true,output_log_file);
     getPull(DataHisto_1D_I_HS,Templates_1D_HS,res,hPull_Iso_HS);
     
     std::cout << "\n\n -------------- > Anisotropic Monopole (NS) \n\n";
     output_log_file << "\n\n -------------- > Anisotropic Monopole (NS) \n\n";
     
-    TemplateFitBH(DataHisto_1D_AniNS_HS,4,Templates_1D_HS,res,res_err,initialValues,false,false,false,true,output_log_file,tmp_fit,1,true);
+    TemplateFitBH(DataHisto_1D_AniNS_HS,4,Templates_1D_HS,res,res_err,initialValues,false,false,false,true,output_log_file);
     getPull(DataHisto_1D_AniNS_HS,Templates_1D_HS,res,hPull_AniNS_HS);
     
     std::cout << "\n\n -------------- > Anisotropic Monopole (EW) \n\n";
     output_log_file << "\n\n -------------- > Anisotropic Monopole (EW) \n\n";
     
-    TemplateFitBH(DataHisto_1D_AniEW_HS,4,Templates_1D_HS,res,res_err,initialValues,false,false,false,true,output_log_file,tmp_fit,2,true);
+    TemplateFitBH(DataHisto_1D_AniEW_HS,4,Templates_1D_HS,res,res_err,initialValues,false,false,false,true,output_log_file);
     getPull(DataHisto_1D_AniEW_HS,Templates_1D_HS,res,hPull_AniEW_HS);
     
     std::cout << "\n\n -------------- > Anisotropic Monopole (FB) \n\n";
     output_log_file << "\n\n -------------- > Anisotropic Monopole (FB) \n\n";
     
-    TemplateFitBH(DataHisto_1D_AniFB_HS,4,Templates_1D_HS,res,res_err,initialValues,false,false,false,true,output_log_file,tmp_fit,3,true);
+    TemplateFitBH(DataHisto_1D_AniFB_HS,4,Templates_1D_HS,res,res_err,initialValues,false,false,false,true,output_log_file);
     getPull(DataHisto_1D_AniFB_HS,Templates_1D_HS,res,hPull_AniFB_HS);
     
     std::cout << "\n\n -------------- > NS + EW linear combination \n\n";
     output_log_file << "\n\n -------------- > NS + EW linear combination \n\n";
     
-    TemplateFitBH(MixedHisto_1D_NS_EW_HS,4,Templates_1D_HS,res,res_err,initialValues,false,false,false,true,output_log_file,tmp_fit,4,true);
+    TemplateFitBH(MixedHisto_1D_NS_EW_HS,4,Templates_1D_HS,res,res_err,initialValues,false,false,false,true,output_log_file);
     getPull(MixedHisto_1D_NS_EW_HS,Templates_1D_HS,res,hPull_Mixed_NS_EW_HS);
     
     std::cout << "\n\n -------------- > NS + FB linear combination \n\n";
     output_log_file << "\n\n -------------- > NS + FB linear combination \n\n";
     
-    TemplateFitBH(MixedHisto_1D_NS_FB_HS,4,Templates_1D_HS,res,res_err,initialValues,false,false,false,true,output_log_file,tmp_fit,5,true);
+    TemplateFitBH(MixedHisto_1D_NS_FB_HS,4,Templates_1D_HS,res,res_err,initialValues,false,false,false,true,output_log_file);
     getPull(MixedHisto_1D_NS_FB_HS,Templates_1D_HS,res,hPull_Mixed_NS_FB_HS);
     
     std::cout << "\n\n -------------- > EW + FB linear combination \n\n";
     output_log_file << "\n\n -------------- > EW + FB linear combination \n\n";
     
-    TemplateFitBH(MixedHisto_1D_EW_FB_HS,4,Templates_1D_HS,res,res_err,initialValues,false,false,false,true,output_log_file,tmp_fit,6,true);
+    TemplateFitBH(MixedHisto_1D_EW_FB_HS,4,Templates_1D_HS,res,res_err,initialValues,false,false,false,true,output_log_file);
     getPull(MixedHisto_1D_EW_FB_HS,Templates_1D_HS,res,hPull_Mixed_EW_FB_HS);
     
     std::cout << "\n\n -------------- > FullMixed linear combination \n\n";
     output_log_file << "\n\n -------------- > FullMixed linear combination \n\n";
     
-    TemplateFitBH(FullMixedHisto_1D_HS,4,Templates_1D_HS,res,res_err,initialValues,false,false,false,true,output_log_file,tmp_fit,7,true);
+    TemplateFitBH(FullMixedHisto_1D_HS,4,Templates_1D_HS,res,res_err,initialValues,false,false,false,true,output_log_file);
     getPull(FullMixedHisto_1D_HS,Templates_1D_HS,res,hPull_FullMixed_HS);
     
     
@@ -458,7 +453,6 @@ void read_from_file(std::string template_path,std::string data_path,std::ofstrea
     pool_file.Close();
     
 }
-*/
 
 void generate_and_fit(
                         ULong64_t data_LS_events,

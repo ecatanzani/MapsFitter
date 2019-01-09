@@ -100,7 +100,18 @@ extern void TH2toTH1_ptr(TH1D &Histo1D,TH2D* Histo2D);
 
 extern void create_binning(Int_t n_bin_lat,Double_t lat_bin_min,Double_t lat_bin_max,Double_t* &binning,Bool_t cos_scale);
 extern void load_1D_histos(TH1D Templates_LS[],TH1D &DataHisto_I_LS,TH1D &DataHisto_NS_LS,TH1D &DataHisto_EW_LS,TH1D &DataHisto_FB_LS,TH1D &MixedDataHisto_NS_EW_LS,TH1D &MixedDataHisto_NS_FB_LS,TH1D &MixedDataHisto_EW_FB_LS,TH1D &FullMixedDataHisto_LS,TH1D Templates_HS[],TH1D &DataHisto_I_HS,TH1D &DataHisto_NS_HS,TH1D &DataHisto_EW_HS,TH1D &DataHisto_FB_HS,TH1D &MixedDataHisto_NS_EW_HS,TH1D &MixedDataHisto_NS_FB_HS,TH1D &MixedDataHisto_EW_FB_HS,TH1D &FullMixedDataHisto_HS,std::string template_path,std::string data_path,std::ofstream &log_file);
-extern void read_from_file(std::string template_path,std::string data_path,std::ofstream &output_log_file);
+
+extern void read_from_file(
+                               std::string template_path,
+                               std::string data_path,
+                               std::ofstream &output_log_file,
+                               std::string output_log,
+                               std::string output_root,
+                               time_t time_stamp,
+                               Double_t NS_anisotropy,
+                               Double_t EW_anisotropy,
+                               Double_t FB_anisotropy
+                           );
 
 extern void generate_and_fit(
                                  ULong64_t data_LS_events,
