@@ -33,6 +33,7 @@ public:
     
 };
 
+#define n_pts 4
 
 void normalize_histos(std::vector<TH1D> &hdelta);
 Double_t compute_integral(TH1D histo);
@@ -46,11 +47,11 @@ Double_t c_fitfunc(Double_t *x, Double_t *par);
 int main(int argc,char* argv[])
 {
     std::vector<TH1D> hdelta;
-    hdelta.resize(4);
+    hdelta.resize(n_pts);
     
-    Double_t times[hdelta.size()] = {1.5,3,6,10};
-    Double_t integrals_68[hdelta.size()];
-    Double_t integrals_95[hdelta.size()];
+    Double_t times[n_pts] = {1.5,3,6,10};
+    Double_t integrals_68[n_pts];
+    Double_t integrals_95[n_pts];
     
     std::string inputPath[2] = {argv[1],argv[2]};
     
