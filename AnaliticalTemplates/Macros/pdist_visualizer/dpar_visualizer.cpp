@@ -184,10 +184,10 @@ void visualizer(std::string input_path)
     Int_t ani_type = 1;
     Double_t ani_intensity = 0.01;
     
-    TH1D iso_component("ISO","iso component",100,530,560);
-    TH1D NS_component("NS","NS component",100,-0.02,0.09);
-    TH1D EW_component("EW","EW component",100,-0.02,0.09);
-    TH1D FB_component("FB","FB component",100,-0.02,0.09);
+    TH1D iso_component("ISO","iso component",100,-0.08,0.08);
+    TH1D NS_component("NS","NS component",100,-0.08,0.14);
+    TH1D EW_component("EW","EW component",100,-0.08,0.14);
+    TH1D FB_component("FB","FB component",100,-0.08,0.14);
     
     ///////////////////////////////////////////////////
     
